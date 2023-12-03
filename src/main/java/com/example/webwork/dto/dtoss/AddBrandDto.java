@@ -22,8 +22,6 @@ public class AddBrandDto {
     public void setName(String name) {
         this.name = name;
     }
-    @NotEmpty(message = "Created must not be null or empty!")
-    @Size(min = 10, message = "Created must be at least 1 characters!")
     public LocalDateTime getCreated() {
         return created;
     }
@@ -32,13 +30,11 @@ public class AddBrandDto {
         this.created = created;
     }
 
-    @Min(value = 1, message = "Modified must be a positive number!")
-    @NotNull(message = "Modified must not be null or empty!")
     public LocalDateTime getModified() {
         return modified;
     }
 
-    public void setBudget(LocalDateTime modified) {
+    public void setModified(LocalDateTime modified) {
         this.modified = modified;
     }
 }

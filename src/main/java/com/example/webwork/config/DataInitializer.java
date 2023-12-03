@@ -55,8 +55,8 @@ public class DataInitializer implements CommandLineRunner {
         model1 = modelService.registerModel(model1);
         model2 = modelService.registerModel(model2);
 
-        UsersDTO user1 = new UsersDTO(null, role1, "alena", "1234566666", "alena", "Brezhneva", true, "http://kkkdad.ru", created1, modified1);
-        UsersDTO user2 = new UsersDTO(null, role2, "Alena2", "0987654301", "alena", "Brezhneva2", true, "http://kjfjjfj.ru", created2, modified2);
+        UsersDTO user1 = new UsersDTO(null, role1, "alena", "1234560340", "alena", "Brezhneva", true, "http://kkkdad.ru", created1, modified1);
+        UsersDTO user2 = new UsersDTO(null, role2, "Alena2", "1234567890", "alena", "Brezhneva2", true, "http://kjfjjfj.ru", created2, modified2);
 
         user1 = usersService.registerUser(user1);
         user2 = usersService.registerUser(user2);

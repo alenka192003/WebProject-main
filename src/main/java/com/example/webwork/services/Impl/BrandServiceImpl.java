@@ -14,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -118,5 +119,15 @@ public class BrandServiceImpl implements BrandService {
 
     public ShowDetailedBrandInfoDto brandDetails(String brandName) {
         return modelMapper.map(brandRepository.findByName(brandName).orElse(null), ShowDetailedBrandInfoDto.class);
+    }
+
+    public void removeBrand(String brandName) {
+        brandRepository.deleteByName(brandName);}
+
+    public void addBrand(AddBrandDto brandDto) {
+        brandDto.setCreated(LocalDateTime.now());
+        brandDto.setModified(LocalDateTime.now());
+        Brand brand = modelMapper.map(brandDto,Brand.class);
+        brandRepository.saveAndFlush(modelMapper.map(brandDto, Brand.class));
     }
 }

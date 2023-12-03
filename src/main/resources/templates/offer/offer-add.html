@@ -13,7 +13,7 @@
         </div>
         <form th:action="@{/offers/add}"
               th:method="post"
-              th:object="${offer}"
+              th:object="${offerModel}"
               class="m-md-auto w-50 pb-3">
           <div class="mb-3">
             <label class="form-label" for="model">Model</label>
@@ -35,18 +35,47 @@
               message</small>
           </div>
 
-          <div class="mb-3">
-            <label class="form-label" for="engineEnum">Engine</label>
-            <input th:field="*{engineEnum}"
-                   th:errorclass="is-invalid"
-                   type="text" class="form-control text-center"
-                   id="engineEnum" aria-describedby="engineEnum" name="engineEnum"/>
-            <small th:if="${#fields.hasErrors('engineEnum')}" th:errors="*{engineEnum}"
-                   class="text-danger">Error
-              message</small>
-          </div>
+          <fieldset class="mb-3">
+            <legend>Choose engine</legend>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input th:field="*{engineEnum}"
+                       th:value="GASOLINE"
+                       th:errorclass="is-invalid"
+                       type="radio" class="form-check-input" name="category"/>
+                <span>GASOLINE</span>
+              </label>
+            </div>
+            <div class="form-check disabled">
+              <label class="form-check-label">
+                <input th:field="*{engineEnum}"
+                       th:value="DIESEL"
+                       th:errorclass="is-invalid"
+                       type="radio" class="form-check-input" name="category"/>
+                <span>DIESEL</span>
+              </label>
+            </div>
+            <div class="form-check disabled">
+              <label class="form-check-label">
+                <input th:field="*{engineEnum}"
+                       th:value="ELECTRIC"
+                       th:errorclass="is-invalid"
+                       type="radio" class="form-check-input" name="category"/>
+                <span>ELECTRIC</span>
+              </label>
+            </div>
+            <div class="form-check disabled">
+              <label class="form-check-label">
+                <input th:field="*{engineEnum}"
+                       th:value="HYBRID"
+                       th:errorclass="is-invalid"
+                       type="radio" class="form-check-input" name="category"/>
+                <span>HYBRID</span>
+              </label>
+            </div>
 
-          <div class="mb-3">
+
+            <div class="mb-3">
             <label class="form-label" for="imageURL">ImageURL</label>
             <input th:field="*{imageURL}"
                    th:errorclass="is-invalid"

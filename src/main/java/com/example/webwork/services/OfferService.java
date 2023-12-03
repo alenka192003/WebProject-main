@@ -14,10 +14,9 @@ public interface OfferService {
     Optional<OfferDTO> findById(String id);
     void expel(String id);
     OfferDTO update(OfferDTO offer);
-    OfferDTO registerOffer_1(AddOfferDto offer);
     List<ShowInfoOffer> allOffers();
 
     ShowDetailedOfferDto offerDetails(ModelDTO model);
-
+    void addOffer(AddOfferDto offerModel);
 
 }

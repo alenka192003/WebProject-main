@@ -1,5 +1,6 @@
 package com.example.webwork.dto.dtoss;
 
+import com.example.webwork.dto.BrandDTO;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
@@ -8,6 +9,7 @@ import java.time.LocalDateTime;
 
 public class AddModelDto {
     private String name;
+    private BrandDTO brand;
 
     private String category;
     private int startYear;
@@ -16,7 +18,7 @@ public class AddModelDto {
     private LocalDateTime modified;
 
     @NotEmpty(message = "Model name must not be null or empty!")
-    @Size(min = 2, max = 10, message = "Model name must be between 2 and 10 characters!")
+    @Size(min = 2, message = "Model name must be between 2 and 10 characters!")
     public String getName() {
         return name;
     }
@@ -59,6 +61,14 @@ public class AddModelDto {
 
     public LocalDateTime getModified() {
         return modified;
+    }
+
+    public BrandDTO getBrand() {
+        return brand;
+    }
+
+    public void setBrand(BrandDTO brand) {
+        this.brand = brand;
     }
 
     public void setModified(LocalDateTime modified) {

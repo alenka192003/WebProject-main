@@ -25,5 +25,5 @@ public interface ModelService {
     List<ShowModelInfoDto> allModels();
 
     ShowModelInfoDto modelDetails(String modelName);
-
+    void removeModel(String modelName);
 }

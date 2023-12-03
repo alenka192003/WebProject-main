@@ -14,8 +14,6 @@ public class ShowInfoUsers {
     private String password;
     private String firstName;
     private String lastName;
-    private boolean isActive;
-    private String imageURL;
     private LocalDateTime created;
     private LocalDateTime modified;
 
@@ -59,21 +57,6 @@ public class ShowInfoUsers {
         this.lastName = lastName;
     }
 
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
-
-    public String getImageURL() {
-        return imageURL;
-    }
-
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
-    }
 
     public LocalDateTime getCreated() {
         return created;

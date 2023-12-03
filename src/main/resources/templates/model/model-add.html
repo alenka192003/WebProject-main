@@ -13,7 +13,7 @@
         </div>
         <form th:action="@{/models/add}"
               th:method="post"
-              th:object="${model}"
+              th:object="${modelModel}"
               class="m-md-auto w-50 pb-3">
           <div class="mb-3">
             <label class="form-label" for="name">Name</label>
@@ -22,6 +22,17 @@
                    type="text" class="form-control text-center" id="name" aria-describedby="nameHelp"
                    name="name"/>
             <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger">Error
+              message</small>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="startYear">Brand</label>
+            <input th:field="*{brand}"
+                   th:errorclass="is-invalid"
+                   type="text" class="form-control text-center"
+                   id="brand" aria-describedby="brand" name="brand"/>
+            <small th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"
+                   class="text-danger">Error
               message</small>
           </div>
 

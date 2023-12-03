@@ -2,21 +2,14 @@ package com.example.webwork.controllers;
 
 import com.example.webwork.dto.ModelDTO;
 import com.example.webwork.dto.dtoss.AddModelDto;
-import com.example.webwork.dto.dtoss.AddUserDto;
-import com.example.webwork.enums.CategoryEnum;
-import com.example.webwork.except.ModelConflictException_2;
 import com.example.webwork.except.ModelNotFoundException;
 import com.example.webwork.services.ModelService;
 import jakarta.validation.Valid;
-import jakarta.websocket.server.PathParam;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/models")
@@ -39,11 +32,6 @@ public class ModelController {
         return modelService.registerModel(model);
     }
 
-    @DeleteMapping("/{id}")
-    void deleteModel(@PathVariable String id) {
-        modelService.expel(id);
-    }
-
     @PutMapping()
     ModelDTO update(@RequestBody ModelDTO model) {
         return modelService.update(model);
@@ -54,7 +42,7 @@ public class ModelController {
         return (ModelDTO) modelService.findAllByName(name);
     }
 
-    @ModelAttribute("model")
+    @ModelAttribute("modelModel")
     public AddModelDto initModel() {
         return new AddModelDto();
     }
@@ -64,14 +52,14 @@ public class ModelController {
     }
 
     @PostMapping("/add")
-    public String addModel(@Valid AddModelDto model, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String addModel(@Valid AddModelDto modelModel, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("modelModel", model);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.model",
+            redirectAttributes.addFlashAttribute("modelModel", modelModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.modelModel",
                     bindingResult);
             return "redirect:/models/add";
         }
-        modelService.registerModel_1(model);
+        modelService.registerModel_1(modelModel);
 
         return "redirect:/";
     }
@@ -88,6 +76,12 @@ public class ModelController {
         model.addAttribute("modelDetails", modelService.modelDetails(modelName));
 
         return "model-details";
+    }
+    @GetMapping("/model-delete/{model-name}")
+    public String deleteModel(@PathVariable("model-name") String modelName) {
+        modelService.removeModel(modelName);
+
+        return "redirect:/models/all";
     }
 
 }

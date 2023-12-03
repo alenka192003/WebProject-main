@@ -136,5 +136,9 @@ public class ModelServiceImpl implements ModelService {
     public ShowModelInfoDto modelDetails(String modelName) {
         return modelMapper.map(modelRepository.findByName(modelName).orElse(null), ShowModelInfoDto.class);
     }
+    public void removeModel(String modelName) {
+        modelRepository.deleteByName(modelName);
+    }
+
 
 }

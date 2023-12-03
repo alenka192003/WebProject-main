@@ -9,17 +9,18 @@
       <div class="col-md-2"></div>
       <main class="jumbotron text-center rounded col-md-12 align-self-center pt-5">
         <div class="justify-content-center">
-          <h1>Offer Details</h1>
+          <h1>User Details</h1>
         </div>
         <div class="row bg-light rounded">
           <div class="col-md-6 pt-3">
-            <h2>Offer</h2>
-            <h4 th:text="'Model: ' + ${offerDetails.model}"></h4>
-            <h4 th:text="'Price: ' + ${offerDetails.price}"></h4>
-            <h4 th:text="'Milleage: ' + ${offerDetails.mileage}"></h4>
-            <h4 th:text="'ImageURL: ' + ${offerDetails.imageURL}"></h4>
-            <div class="align-bottom"><a class="btn btn-danger align-bottom"
-                                         th:href="@{/offers/offer-delete/{offer-id}(offer-id=${offerDetails.id})}">Delete offer</a>
+            <h2>User</h2>
+            <h2 th:text="'UserName: ' + ${userDetails.userName}"></h2>
+            <h4 th:text="'firstName: ' + ${userDetails.firstName}"></h4>
+            <h4 th:text="'lastName: ' + ${userDetails.lastName}"></h4>
+            <h4 th:text="'role: ' + ${userDetails.role}"></h4>
+            <h4 th:text="'Created: ' + ${userDetails.created}"></h4>
+            <h4 th:text="'Modified: ' + ${userDetails.modified}"></h4>
+            <div class="align-bottom"><a class="btn btn-danger align-bottom" th:href="@{/users/user-delete/{user-userName}(user-userName=${userDetails.userName})}">Delete user</a>
             </div>
           </div>
         </div>

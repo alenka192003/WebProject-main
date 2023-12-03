@@ -99,23 +99,8 @@ public class OfferServiceImpl implements OfferService {
         this.offerRepository = offerRepository;
     }
 
-    @Override
-    public OfferDTO registerOffer_1(AddOfferDto offer) {
-        if (!this.validationUtil.isValid(offer)) {
-            this.validationUtil
-                    .violations(offer)
-                    .stream()
-                    .map(ConstraintViolation::getMessage)
-                    .forEach(System.out::println);
-            throw new IllegalArgumentException("не подходит");
-        }
-        Offer b = modelMapper.map(offer, Offer.class);
-        String userId = b.getId();
-        if (userId == null || offerRepository.findById(userId).isEmpty()) {
-            return modelMapper.map(offerRepository.save(b), OfferDTO.class);
-        } else {
-            throw new OfferConflictException("уже существует с таким id");
-        }
+    public void addOffer(AddOfferDto offerModel) {
+        offerRepository.saveAndFlush(modelMapper.map(offerModel, Offer.class));
     }
 
     public List<ShowInfoOffer> allOffers() {

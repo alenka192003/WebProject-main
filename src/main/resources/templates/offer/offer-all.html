@@ -8,11 +8,13 @@
     <div class="row">
       <div class="col-md-2"></div>
       <div class="jumbotron text-center rounded col-md-8 align-self-center pt-5">
-        <h2 class="text-center text-dark mt-5">All Brands</h2>
-        <div th:each="c : ${brandInfo}" class="d-flex flex-column bg-text mb-3">
-          <h2 th:text="'Brand: ' + ${c.name}"></h2>
-          <h4 th:text="'Created: ' + ${c.created}"></h4>
-          <h4 th:text="'Modified: ' + ${c.modified}"></h4>
+        <h2 class="text-center text-dark mt-5">All Offers</h2>
+        <div th:each="c : ${offerInfo}" class="d-flex flex-column bg-text mb-3">
+          <h2 th:text="'Offer: ' + ${c.price}"></h2>
+          <h4 th:text="'Model: ' + ${c.model.name}"></h4>
+          <h4 th:text="'Engine: ' + ${c.engineEnum}"></h4>
+          <h4><a class="btn-block" th:href="@{/offers/offers-details/{offer-model}(offer-model=${c.model})}">Detail
+            info</a></h4>
         </div>
       </div>
     </div>

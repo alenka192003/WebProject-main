@@ -22,26 +22,26 @@ public class AddUserDto {
         this.userName = userName;
     }
 
-    private int password;
-    
+    private String password;
+    @NotEmpty(message = "password must not be null or empty!")
     @Size(min = 10, message = "password must be at least 1 characters!")
-    public int getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(int password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
     private String firstName;
-    @Min(value = 2, message = "firstName must be more than 2!")
+    @Size(min = 2, message = "firstName must be more than 2!")
     @NotNull(message = "firstName must not be null or empty!")
     public String getFirstName() {
         return firstName;
     }
 
     private String lastName;
-    @Min(value = 2,message = "lastName must be more than 2!")
+    @Size(min = 2,message = "lastName must be more than 2!")
     @NotNull(message = "lastName must not be null or empty!")
     public String getLastName() {
         return lastName;

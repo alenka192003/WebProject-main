@@ -1,9 +1,7 @@
 package com.example.webwork.controllers;
 
-import com.example.webwork.dto.ModelDTO;
 import com.example.webwork.dto.OfferDTO;
 import com.example.webwork.dto.dtoss.AddOfferDto;
-import com.example.webwork.dto.dtoss.AddUserDto;
 import com.example.webwork.except.OfferNotFoundException;
 import com.example.webwork.services.OfferService;
 import jakarta.validation.Valid;
@@ -40,7 +38,7 @@ public class OfferController {
         return offerService.update(offer);
     }
 
-    @ModelAttribute("offer")
+    @ModelAttribute("offerModel")
     public AddOfferDto initOffer() {
         return new AddOfferDto();
     }
@@ -50,14 +48,14 @@ public class OfferController {
     }
 
     @PostMapping("/add")
-    public String addOffer(@Valid AddOfferDto offer, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String addOffer(@Valid AddOfferDto offerModel, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("offer", offer);
+            redirectAttributes.addFlashAttribute("offerModel", offerModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.offer",
                     bindingResult);
             return "redirect:/offers/add";
         }
-        offerService.registerOffer_1(offer);
+        offerService.addOffer(offerModel);
 
         return "redirect:/";
     }

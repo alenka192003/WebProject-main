@@ -1,20 +1,15 @@
 package com.example.webwork.controllers;
 
 import com.example.webwork.dto.UsersDTO;
-import com.example.webwork.dto.dtoss.AddBrandDto;
 import com.example.webwork.dto.dtoss.AddUserDto;
 import com.example.webwork.except.UsersNotFoundException;
-import com.example.webwork.models.Users;
 import com.example.webwork.services.UsersService;
 import jakarta.validation.Valid;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/users")
@@ -35,7 +30,7 @@ public class UserController {
         return userService.registerUser(users);
     }
 
-    @ModelAttribute("user")
+    @ModelAttribute("userModel")
     public AddUserDto initBrand() {
         return new AddUserDto();
     }
@@ -45,22 +40,18 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public String addUser(@Valid AddUserDto user, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String addUser(@Valid AddUserDto userModel, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("userModel", user);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.user",
+            redirectAttributes.addFlashAttribute("userModel", userModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userModel",
                     bindingResult);
             return "redirect:/users/add";
         }
-        userService.registerUser_1(user);
+        userService.addUser(userModel);
 
         return "redirect:/";
     }
 
-    @DeleteMapping("/{id}")
-    void deleteUser(@PathVariable String id) {
-        userService.expel(id);
-    }
 
     @PutMapping()
     UsersDTO updateUser(@RequestBody UsersDTO users) {
@@ -73,4 +64,20 @@ public class UserController {
 
         return "user-all";
     }
+    @GetMapping("/user-details/{user-userName}")
+    public String userDetails(@PathVariable("user-userName") String userName, Model model) {
+        model.addAttribute("userDetails", userService.userDetails(userName));
+
+        return "user-details";
+    }
+
+    @GetMapping("/user-delete/{user-userName}")
+    public String deleteUser(@PathVariable("user-userName") String userName) {
+        userService.removeUser(userName);
+
+        return "redirect:/users/all";
+    }
+
+
+
 }

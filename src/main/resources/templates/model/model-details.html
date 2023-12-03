@@ -21,8 +21,7 @@
             <h4 th:text="'Start year: ' + ${modelDetails.endYear}"></h4>
             <h4 th:text="'Created: ' + ${modelDetails.created}"></h4>
             <h4 th:text="'Modified: ' + ${modelDetails.modified}"></h4>
-            <div class="align-bottom"><a class="btn btn-danger align-bottom"
-                                         th:href="@{/model/model-delete/{model-name}(model-name=${modelDetails.name})}">Delete model</a>
+            <div class="align-bottom"><a class="btn btn-danger align-bottom" th:href="@{/models/model-delete/{model-name}(model-name=${modelDetails.name})}">Delete model</a>
             </div>
           </div>
         </div>

@@ -1,10 +1,7 @@
 package com.example.webwork.services.Impl;
 
 import com.example.webwork.dto.BrandDTO;
-import com.example.webwork.dto.dtoss.AddBrandDto;
-import com.example.webwork.dto.dtoss.AddUserDto;
-import com.example.webwork.dto.dtoss.ShowDetailedBrandInfoDto;
-import com.example.webwork.dto.dtoss.ShowInfoUsers;
+import com.example.webwork.dto.dtoss.*;
 import com.example.webwork.except.BrandConflictException;
 import com.example.webwork.except.UsersConflictException;
 import com.example.webwork.except.UsersNotFoundException;
@@ -100,27 +97,22 @@ public class UsersServiceImpl implements UsersService {
         this.userRepository = userRepository;
     }
 
-    @Override
-    public UsersDTO registerUser_1(AddUserDto user) {
-        if (!this.validationUtil.isValid(user)) {
-            this.validationUtil
-                    .violations(user)
-                    .stream()
-                    .map(ConstraintViolation::getMessage)
-                    .forEach(System.out::println);
-            throw new IllegalArgumentException("не подходит");
-        }
-        Users b = modelMapper.map(user, Users.class);
-        String userId = b.getId();
-        if (userId == null || userRepository.findById(userId).isEmpty()) {
-            return modelMapper.map(userRepository.save(b), UsersDTO.class);
-        } else {
-            throw new UsersConflictException("уже существует с таким id");
-        }
+    public void addUser(AddUserDto userModel) {
+        userRepository.saveAndFlush(modelMapper.map(userModel, Users.class));
     }
 
     public List<ShowInfoUsers> allUsers() {
         return userRepository.findAll().stream().map(users -> modelMapper.map(users, ShowInfoUsers.class))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public ShowInfoUsers userDetails(String userName) {
+        return modelMapper.map(userRepository.findByUserName(userName).orElse(null), ShowInfoUsers.class);
+    }
+
+    public void removeUser(String userName) {
+        userRepository.deleteByUserName(userName);
+    }
+
 }

@@ -40,26 +40,28 @@ public class BrandController {
     void deleteBrand(@PathVariable String id) {
         brandService.expel(id);
     }
+    //валидация + логика Все бренды имеют свои модели
+    //все варианты + офферы и модели
 
-    @ModelAttribute("brand")
+    @ModelAttribute("brandModel")
     public AddBrandDto initBrand() {
         return new AddBrandDto();
     }
 
     @PutMapping()
-    BrandDTO updateBrand(@RequestBody BrandDTO brand) {
-        return brandService.update(brand);
+    BrandDTO updateBrand(@RequestBody BrandDTO brandModel) {
+        return brandService.update(brandModel);
     }
 
     @PostMapping("/add")
-    public String addBrand(@Valid AddBrandDto brand, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String addBrand(@Valid AddBrandDto brandModel, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("brandModel", brand);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.brand",
+            redirectAttributes.addFlashAttribute("brandModel", brandModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.brandModel",
                     bindingResult);
             return "redirect:/brands/add";
         }
-        brandService.registerBrand_1(brand);
+        brandService.addBrand(brandModel);
 
         return "redirect:/";
     }
@@ -69,6 +71,12 @@ public class BrandController {
         model.addAttribute("brandDetails", brandService.brandDetails(brandName));
 
         return "brand-details";
+    }
+    @GetMapping("/brand-delete/{brand-name}")
+    public String deleteCompany(@PathVariable("brand-name") String brandName) {
+        brandService.removeBrand(brandName);
+
+        return "redirect:/brands/all";
     }
 
 }
