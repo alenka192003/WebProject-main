@@ -1,9 +1,11 @@
-package com.example.webwork.controllers;
+package com.example.webwork.web;
 
 import com.example.webwork.dto.OfferDTO;
 import com.example.webwork.dto.dtoss.AddOfferDto;
 import com.example.webwork.except.OfferNotFoundException;
+import com.example.webwork.services.ModelService;
 import com.example.webwork.services.OfferService;
+import com.example.webwork.services.UsersService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +17,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/offers")
 public class OfferController {
     private final OfferService offerService;
-    public OfferController(OfferService offerService) {this.offerService = offerService;}
+    private final ModelService modelService;
+    private final UsersService usersService;
+    public OfferController(OfferService offerService, ModelService modelService, UsersService usersService) {this.offerService = offerService;
+        this.modelService = modelService;
+        this.usersService = usersService;
+    }
 
     @GetMapping()
     Iterable<OfferDTO> getAllOffers() {return offerService.getAll();}
@@ -33,6 +40,14 @@ public class OfferController {
         offerService.expel(id);
     }
 
+    @GetMapping("/add")
+    public String addOffer(Model model) {
+        model.addAttribute("availableModels", modelService.allModels());
+        model.addAttribute("availableUsers",usersService.allUsers());
+        return "/offer/offer-add";
+    }
+
+
     @PutMapping()
     OfferDTO updateOffer(@RequestBody OfferDTO offer) {
         return offerService.update(offer);
@@ -42,10 +57,7 @@ public class OfferController {
     public AddOfferDto initOffer() {
         return new AddOfferDto();
     }
-    @GetMapping("/add")
-    public String addOffer() {
-        return "offer-add";
-    }
+
 
     @PostMapping("/add")
     public String addOffer(@Valid AddOfferDto offerModel, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
@@ -64,14 +76,21 @@ public class OfferController {
     public String showAllOffers(Model model) {
         model.addAttribute("offerInfo", offerService.allOffers());
 
-        return "offer-all";
+        return "offer/offer-all";
     }
 
-    @GetMapping("/offer-details/{offer-model}")
-    public String offerDetails(@PathVariable("offer-model") OfferDTO offer, Model model) {
-        model.addAttribute("offerDetails", offerService.offerDetails(offer.getModel()));
+    @GetMapping("/offer-details/{offer-id}")
+    public String offerDetails(@PathVariable("offer-id") OfferDTO offer, Model model) {
+        model.addAttribute("offerDetails", offerService.offerDetails(offer.getId()));
 
-        return "offer-details";
+        return "/offer/offer-details";
+    }
+
+    @GetMapping("/offer-details/{offer-userName}")
+    public String offerDetails(@PathVariable("offer-userName") String userName, Model model) {
+        model.addAttribute("offerDetails", offerService.offerDetails(userName));
+
+        return "offers/brand-details";
     }
 
 }

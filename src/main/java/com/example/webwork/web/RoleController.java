@@ -1,4 +1,4 @@
-package com.example.webwork.controllers;
+package com.example.webwork.web;
 
 import com.example.webwork.dto.RoleDTO;
 import com.example.webwork.except.RoleNotFoundException;

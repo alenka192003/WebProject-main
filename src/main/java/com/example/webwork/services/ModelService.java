@@ -17,12 +17,10 @@ public interface ModelService {
     Optional<ModelDTO> findById(String id);
 
     void expel(String id);
-
     ModelDTO update(ModelDTO model);
     List<ModelDTO> findAllByName(String name);
-
-    ModelDTO registerModel_1(AddModelDto model);
     List<ShowModelInfoDto> allModels();
+    void addModel(AddModelDto modelModel);
 
     ShowModelInfoDto modelDetails(String modelName);
     void removeModel(String modelName);

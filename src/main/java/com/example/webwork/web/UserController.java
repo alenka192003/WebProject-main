@@ -1,4 +1,4 @@
-package com.example.webwork.controllers;
+package com.example.webwork.web;
 
 import com.example.webwork.dto.UsersDTO;
 import com.example.webwork.dto.dtoss.AddUserDto;
@@ -36,7 +36,7 @@ public class UserController {
     }
     @GetMapping("/add")
     public String addUser() {
-        return "user-add";
+        return "user/user-add";
     }
 
     @PostMapping("/add")
@@ -62,13 +62,13 @@ public class UserController {
     public String showAllUsers(Model model) {
         model.addAttribute("usersInfo", userService.allUsers());
 
-        return "user-all";
+        return "user/user-all";
     }
     @GetMapping("/user-details/{user-userName}")
     public String userDetails(@PathVariable("user-userName") String userName, Model model) {
         model.addAttribute("userDetails", userService.userDetails(userName));
 
-        return "user-details";
+        return "user/user-details";
     }
 
     @GetMapping("/user-delete/{user-userName}")

@@ -1,16 +1,15 @@
 package com.example.webwork.services.Impl;
 
 import com.example.webwork.dto.ModelDTO;
-import com.example.webwork.dto.UsersDTO;
 import com.example.webwork.dto.dtoss.*;
 import com.example.webwork.except.OfferConflictException;
 import com.example.webwork.except.OfferNotFoundException;
 import com.example.webwork.dto.OfferDTO;
-import com.example.webwork.except.UsersConflictException;
+import com.example.webwork.models.Model;
 import com.example.webwork.models.Offer;
-import com.example.webwork.models.Users;
 import com.example.webwork.repo.ModelRepository;
 import com.example.webwork.repo.OfferRepository;
+import com.example.webwork.repo.UsersRepository;
 import com.example.webwork.services.OfferService;
 import com.example.webwork.util.ValidationUtil;
 import jakarta.validation.ConstraintViolation;
@@ -18,6 +17,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,11 +27,15 @@ public class OfferServiceImpl implements OfferService {
 
     private final ModelMapper modelMapper;
     private  OfferRepository offerRepository;
+    private  ModelRepository modelRepository;
+    private UsersRepository usersRepository;
     private final ValidationUtil validationUtil;
 
     @Autowired
-    public OfferServiceImpl(ModelMapper modelMapper, ValidationUtil validationUtil) {
+    public OfferServiceImpl(ModelMapper modelMapper, ModelRepository modelRepository, UsersRepository usersRepository, ValidationUtil validationUtil) {
         this.modelMapper = modelMapper;
+        this.modelRepository = modelRepository;
+        this.usersRepository = usersRepository;
         this.validationUtil = validationUtil;
     }
 
@@ -99,9 +103,6 @@ public class OfferServiceImpl implements OfferService {
         this.offerRepository = offerRepository;
     }
 
-    public void addOffer(AddOfferDto offerModel) {
-        offerRepository.saveAndFlush(modelMapper.map(offerModel, Offer.class));
-    }
 
     public List<ShowInfoOffer> allOffers() {
         return offerRepository.findAll().stream().map(offer -> modelMapper.map(offer, ShowInfoOffer.class))
@@ -109,9 +110,17 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public ShowDetailedOfferDto offerDetails(ModelDTO model) {
-        return modelMapper.map(offerRepository.findByModel(model).orElse(null), ShowDetailedOfferDto.class);
+    public ShowDetailedOfferDto offerDetails(String id) {
+        return modelMapper.map(offerRepository.findOfferById(id).orElse(null), ShowDetailedOfferDto.class);
     }
-
+    public void addOffer(AddOfferDto offerModel) {
+        Offer offer = modelMapper.map(offerModel,Offer.class);
+        offer.setCreated(LocalDateTime.now());
+        offer.setModel(modelRepository.findByName(offerModel.getModelName()).orElse(null));
+        offer.setUsers(usersRepository.findByUserName(offerModel.getUn()).orElse(null));
+        offer.setTransmissionEnum(offerModel.getTransmissionEnum());
+        offer.setEngineEnum(offerModel.getEngineEnum());
+        offerRepository.saveAndFlush(offer);
+    }
 
 }

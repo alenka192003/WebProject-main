@@ -9,8 +9,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class ShowDetailedOfferDto {
-    private ModelDTO model;
-    private UsersDTO users;
+    private String modelName;
+    private String un;
     private String description;
     private EngineEnum engineEnum;
     private String imageURL;
@@ -18,24 +18,22 @@ public class ShowDetailedOfferDto {
     private BigDecimal price;
     private TransmissionEnum transmissionEnum;
     private int year;
-    private LocalDateTime created;
-    private LocalDateTime modified;
 
 
-    public ModelDTO getModel() {
-        return model;
+    public String getModelName() {
+        return modelName;
     }
 
-    public void setModel(ModelDTO model) {
-        this.model = model;
+    public void setModelName(String modelName) {
+        this.modelName = modelName;
     }
 
-    public UsersDTO getUsers() {
-        return users;
+    public String getUn() {
+        return un;
     }
 
-    public void setUsers(UsersDTO users) {
-        this.users = users;
+    public void setUn(String un) {
+        this.un = un;
     }
 
     public String getDescription() {
@@ -94,19 +92,4 @@ public class ShowDetailedOfferDto {
         this.year = year;
     }
 
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
-    }
-
-    public LocalDateTime getModified() {
-        return modified;
-    }
-
-    public void setModified(LocalDateTime modified) {
-        this.modified = modified;
-    }
 }

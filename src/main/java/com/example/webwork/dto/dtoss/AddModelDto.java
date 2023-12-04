@@ -1,6 +1,7 @@
 package com.example.webwork.dto.dtoss;
 
 import com.example.webwork.dto.BrandDTO;
+import com.example.webwork.enums.CategoryEnum;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
@@ -9,9 +10,9 @@ import java.time.LocalDateTime;
 
 public class AddModelDto {
     private String name;
-    private BrandDTO brand;
+    private String brandName;
 
-    private String category;
+    private CategoryEnum category;
     private int startYear;
     private int endYear;
     private LocalDateTime created;
@@ -27,11 +28,11 @@ public class AddModelDto {
         this.name = name;
     }
 
-    public String getCategory() {
+    public CategoryEnum getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(CategoryEnum category) {
         this.category = category;
     }
 
@@ -63,15 +64,19 @@ public class AddModelDto {
         return modified;
     }
 
-    public BrandDTO getBrand() {
-        return brand;
+
+    public String getBrandName() {
+        return brandName;
     }
 
-    public void setBrand(BrandDTO brand) {
-        this.brand = brand;
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
     }
 
     public void setModified(LocalDateTime modified) {
         this.modified = modified;
     }
+
+
+    //кастомный view
 }

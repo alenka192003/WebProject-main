@@ -1,17 +1,10 @@
 package com.example.webwork.services.Impl;
 
-import com.example.webwork.dto.UsersDTO;
-import com.example.webwork.dto.dtoss.AddModelDto;
-import com.example.webwork.dto.dtoss.AddUserDto;
-import com.example.webwork.dto.dtoss.ShowDetailedBrandInfoDto;
-import com.example.webwork.dto.dtoss.ShowModelInfoDto;
-import com.example.webwork.enums.CategoryEnum;
-import com.example.webwork.except.BrandConflictException;
+import com.example.webwork.dto.dtoss.*;
 import com.example.webwork.except.ModelConflictException;
 import com.example.webwork.except.ModelNotFoundException;
 import com.example.webwork.dto.ModelDTO;
 import com.example.webwork.models.Model;
-import com.example.webwork.models.Users;
 import com.example.webwork.repo.BrandRepository;
 import com.example.webwork.repo.ModelRepository;
 import com.example.webwork.services.ModelService;
@@ -21,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.IllformedLocaleException;
 import java.util.List;
 import java.util.Optional;
@@ -31,11 +25,13 @@ public class ModelServiceImpl implements ModelService {
 
     private final ModelMapper modelMapper;
     private ModelRepository modelRepository;
+    private BrandRepository brandRepository;
     private final ValidationUtil validationUtil;
 
     @Autowired
-    public ModelServiceImpl(ModelMapper modelMapper, ValidationUtil validationUtil) {
+    public ModelServiceImpl(ModelMapper modelMapper, BrandRepository brandRepository, ValidationUtil validationUtil) {
         this.modelMapper = modelMapper;
+        this.brandRepository = brandRepository;
         this.validationUtil = validationUtil;
     }
 
@@ -108,24 +104,7 @@ public class ModelServiceImpl implements ModelService {
     public void setModelRepository(ModelRepository modelRepository) {
         this.modelRepository = modelRepository;
     }
-    @Override
-    public ModelDTO registerModel_1(AddModelDto model) {
-        if (!this.validationUtil.isValid(model)) {
-            this.validationUtil
-                    .violations(model)
-                    .stream()
-                    .map(ConstraintViolation::getMessage)
-                    .forEach(System.out::println);
-            throw new IllegalArgumentException("не подходит");
-        }
-        Model b = modelMapper.map(model, Model.class);
-        String userId = b.getId();
-        if (userId == null || modelRepository.findById(userId).isEmpty()) {
-            return modelMapper.map(modelRepository.save(b), ModelDTO.class);
-        } else {
-            throw new ModelConflictException("уже существует с таким id");
-        }
-    }
+
 
     public List<ShowModelInfoDto> allModels() {
         return modelRepository.findAll().stream().map(model -> modelMapper.map(model, ShowModelInfoDto.class))
@@ -139,6 +118,13 @@ public class ModelServiceImpl implements ModelService {
     public void removeModel(String modelName) {
         modelRepository.deleteByName(modelName);
     }
-
+    public void addModel(AddModelDto modelModel) {
+        modelModel.setCreated(LocalDateTime.now());
+        modelModel.setModified(LocalDateTime.now());
+        Model model = modelMapper.map(modelModel,Model.class);
+        model.setBrand(brandRepository.findByName(modelModel.getBrandName()).orElse(null));
+        model.setCategoryEnum(modelModel.getCategory());
+        modelRepository.saveAndFlush(model);
+    }
 
 }

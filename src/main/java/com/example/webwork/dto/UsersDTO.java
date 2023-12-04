@@ -11,7 +11,7 @@ public class UsersDTO {
     @NotNull
     @NotEmpty
     @Length(min = 2, message = "Имя пользователя должно быть больше 2 символов!")
-    private String userName;
+    public String userName;
     @Length(min = 10, message = "Пароль должен быть больше 10 символов!")
     private String password;
     @NotNull

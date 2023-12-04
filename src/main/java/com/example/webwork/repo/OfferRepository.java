@@ -1,6 +1,7 @@
 package com.example.webwork.repo;
 
 import com.example.webwork.dto.ModelDTO;
+import com.example.webwork.dto.OfferDTO;
 import com.example.webwork.dto.dtoss.ShowDetailedBrandInfoDto;
 import com.example.webwork.dto.dtoss.ShowDetailedOfferDto;
 import com.example.webwork.models.Model;
@@ -11,5 +12,6 @@ import java.util.Optional;
 
 public interface OfferRepository extends JpaRepository<Offer, String> {
     Optional<Offer> findByModel(ModelDTO model);
+    Optional<Offer> findOfferById(String id);
 
 }

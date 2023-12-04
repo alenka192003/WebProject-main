@@ -21,7 +21,7 @@ public class Model extends Base {
     @Enumerated(EnumType.ORDINAL)
     @Column(name="category", length = 11, nullable = false)
     private CategoryEnum categoryEnum;
-    @Column(name="imageURL", length = 255, nullable = false)
+    @Column(name="imageURL", length = 255)
     private String imageUrl;
     @Column(name="startYear", length = 11, nullable = false)
     private int startYear;

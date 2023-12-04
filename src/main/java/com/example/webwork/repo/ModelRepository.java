@@ -18,7 +18,7 @@ public interface ModelRepository extends JpaRepository<Model, String> {
     @Query("SELECT m from Model m JOIN m.name WHERE m.name =:name")
     List<ModelDTO> findAllByName(@Param("name") String name);
 
-    Optional<Model> findByName(String value);
+    Optional<Model> findByName(String name);
     @Modifying
     @Transactional
     Optional<Model> deleteByName(String modelName);

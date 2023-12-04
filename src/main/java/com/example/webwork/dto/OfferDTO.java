@@ -16,14 +16,11 @@ public class OfferDTO {
     private BigDecimal price;
     private TransmissionEnum transmissionEnum;
     private int year;
-    private LocalDateTime created;
-    private LocalDateTime modified;
 
     protected OfferDTO() {};
 
     public OfferDTO(String id, ModelDTO model, UsersDTO users, String description, EngineEnum engineEnum, String imageURL,
-                    int mileage, BigDecimal price, TransmissionEnum transmissionEnum, int year, LocalDateTime created,
-                    LocalDateTime modified) {
+                    int mileage, BigDecimal price, TransmissionEnum transmissionEnum, int year) {
         this.id = id;
         this.model = model;
         this.users = users;
@@ -34,8 +31,6 @@ public class OfferDTO {
         this.price = price;
         this.transmissionEnum = transmissionEnum;
         this.year = year;
-        this.created = created;
-        this.modified = modified;
     }
 
     public String getId() {
@@ -118,22 +113,6 @@ public class OfferDTO {
         this.year = year;
     }
 
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
-    }
-
-    public LocalDateTime getModified() {
-        return modified;
-    }
-
-    public void setModified(LocalDateTime modified) {
-        this.modified = modified;
-    }
-
     @Override
     public String toString() {
         return "OfferDto{" +
@@ -147,8 +126,6 @@ public class OfferDTO {
                 ", price=" + price +
                 ", transmissionEnum=" + transmissionEnum +
                 ", year=" + year +
-                ", created=" + created +
-                ", modified=" + modified +
                 '}';
     }
 }

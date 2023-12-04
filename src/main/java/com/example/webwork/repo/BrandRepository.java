@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 public interface BrandRepository extends JpaRepository<Brand, String> {
-    Optional<Brand> findByName(String value);
+    Optional<Brand> findByName(String name);
     @Modifying
     @Transactional
     Optional<Brand> deleteByName(String brandName);

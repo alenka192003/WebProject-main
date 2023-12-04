@@ -1,11 +1,13 @@
-package com.example.webwork.controllers;
+package com.example.webwork.web;
 
 import com.example.webwork.dto.ModelDTO;
 import com.example.webwork.dto.dtoss.AddModelDto;
 import com.example.webwork.except.ModelNotFoundException;
+import com.example.webwork.services.BrandService;
 import com.example.webwork.services.ModelService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +17,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/models")
 public class ModelController {
     private final ModelService modelService;
-    public ModelController(ModelService modelService) {
+    private final BrandService brandService;
+    public ModelController(ModelService modelService, BrandService brandService) {
         this.modelService = modelService;
+        this.brandService = brandService;
     }
 
     @GetMapping()
@@ -46,10 +50,13 @@ public class ModelController {
     public AddModelDto initModel() {
         return new AddModelDto();
     }
+
     @GetMapping("/add")
-    public String addModel() {
-        return "model-add";
+    public String addModel(Model model) {
+        model.addAttribute("availableBrands", brandService.allBrands());
+        return "/model/model-add";
     }
+
 
     @PostMapping("/add")
     public String addModel(@Valid AddModelDto modelModel, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
@@ -59,7 +66,7 @@ public class ModelController {
                     bindingResult);
             return "redirect:/models/add";
         }
-        modelService.registerModel_1(modelModel);
+        modelService.addModel(modelModel);
 
         return "redirect:/";
     }
@@ -68,14 +75,14 @@ public class ModelController {
     public String showAllModel(Model model) {
         model.addAttribute("modelInfo", modelService.allModels());
 
-        return "model-all";
+        return "model/model-all";
     }
 
     @GetMapping("/model-details/{model-name}")
     public String modelDetails(@PathVariable("model-name") String modelName, Model model) {
         model.addAttribute("modelDetails", modelService.modelDetails(modelName));
 
-        return "model-details";
+        return "/model/model-details";
     }
     @GetMapping("/model-delete/{model-name}")
     public String deleteModel(@PathVariable("model-name") String modelName) {

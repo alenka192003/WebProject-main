@@ -14,13 +14,15 @@
         <div class="row bg-light rounded">
           <div class="col-md-6 pt-3">
             <h2>Offer</h2>
-            <h4 th:text="'Model: ' + ${offerDetails.model.name}"></h4>
+            <h4 th:text="'Model: ' + ${offerDetails.modelName}"></h4>
             <h4 th:text="'Price: ' + ${offerDetails.price}"></h4>
             <h4 th:text="'Milleage: ' + ${offerDetails.mileage}"></h4>
             <h4 th:text="'ImageURL: ' + ${offerDetails.imageURL}"></h4>
             <h4 th:text="'Engine: ' + ${offerDetails.engineEnum}"></h4>
+            <h4 th:text="'Engine: ' + ${offerDetails.transmissionEnum}"></h4>
+            <h4 th:text="'Engine: ' + ${offerDetails.description}"></h4>
             <div class="align-bottom"><a class="btn btn-danger align-bottom"
-                                         th:href="@{/offers/offer-delete/{offer-id}(offer-id=${offerDetails.id})}">Delete offer</a>
+                                         th:href="@{/offers/offer-delete/{offer-id}(offer-id=${offerDetails.modelName})}">Delete offer</a>
             </div>
           </div>
         </div>

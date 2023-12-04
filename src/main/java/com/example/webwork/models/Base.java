@@ -12,9 +12,9 @@ public abstract class Base {
     @GenericGenerator(name = "uuid-string", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "id")
     private String id;
-    @Column(name="created", length = 6, nullable = false)
+    @Column(name="created", length = 6)
     private LocalDateTime created;
-    @Column(name="modified", length = 6, nullable = false)
+    @Column(name="modified", length = 6)
     private LocalDateTime modified;
 
     public String getId() {

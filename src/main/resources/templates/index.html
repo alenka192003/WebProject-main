@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/head"/>
+<head th:replace="~{fragments/head}"/>
 <body class="d-flex flex-column h-100">
-<div th:replace="fragments/navbar">Navbar</div>
+<div th:replace="~{fragments/navbar}">Navbar</div>
 <main class="flex-shrink-0">
   <div class="container">
     <div class="row">
       <div class="col-md-2"></div>
       <div class="jumbotron text-center rounded col-md-8 align-self-center pt-5">
-        <div class="justify-content-center">
-          <h1>Welcome to my Application!</h1>
-        </div>
-        <div><span th:text="'Last update of Database:'"></span>&nbsp;
-          <span th:text="${#dates.createNow()}"></span>
+        <div class="d-flex flex-column align-items-center justify-content-center">
+          <h1 class="display-4">Welcome to my Application!</h1>
+          <p class="lead">Last update of Database: <span th:text="${#dates.createNow()}"></span></p>
         </div>
       </div>
     </div>

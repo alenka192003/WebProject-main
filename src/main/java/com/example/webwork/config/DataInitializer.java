@@ -64,8 +64,8 @@ public class DataInitializer implements CommandLineRunner {
         BigDecimal price1 = new BigDecimal(100);
         BigDecimal price2 = new BigDecimal(1);
 
-        OfferDTO offer1 = new OfferDTO(null, model1, user2, "Заказ", EngineEnum.ELECTRIC, "http://kkkkkgfdds", 9, price1, TransmissionEnum.MANUAL, 2002, created1, modified2);
-        OfferDTO offer2 = new OfferDTO(null, model2, user1, "Заказ 2", EngineEnum.GASOLINE, "http://kksdakd", 1, price2, TransmissionEnum.AUTOMATIC, 2002, created2, modified2);
+        OfferDTO offer1 = new OfferDTO(null, model1, user2, "Заказ", EngineEnum.ELECTRIC, "http://kkkkkgfdds", 9, price1, TransmissionEnum.MANUAL, 2002);
+        OfferDTO offer2 = new OfferDTO(null, model2, user1, "Заказ 2", EngineEnum.GASOLINE, "http://kksdakd", 1, price2, TransmissionEnum.AUTOMATIC, 2002);
 
 
         offerService.registerOffer(offer1);

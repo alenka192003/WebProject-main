@@ -1,4 +1,4 @@
-package com.example.webwork.controllers;
+package com.example.webwork.web;
 
 import com.example.webwork.dto.BrandDTO;
 import com.example.webwork.dto.dtoss.AddBrandDto;
@@ -28,12 +28,12 @@ public class BrandController {
     public String showAllBrands(Model model) {
         model.addAttribute("brandInfo", brandService.allBrands());
 
-        return "brand-all";
+        return "/brand/brand-all";
     }
 
     @GetMapping("/add")
     public String addBrand() {
-        return "brand-add";
+        return "/brand/brand-add";
     }
 
     @DeleteMapping("/{id}")
@@ -70,7 +70,7 @@ public class BrandController {
     public String brandDetails(@PathVariable("brand-name") String brandName, Model model) {
         model.addAttribute("brandDetails", brandService.brandDetails(brandName));
 
-        return "brand-details";
+        return "brand/brand-details";
     }
     @GetMapping("/brand-delete/{brand-name}")
     public String deleteCompany(@PathVariable("brand-name") String brandName) {

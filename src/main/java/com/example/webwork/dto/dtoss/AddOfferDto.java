@@ -9,20 +9,30 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class AddOfferDto {
-    private ModelDTO model;
+    private String modelName;
+    private String un;
     private String description;
     private EngineEnum engineEnum;
     private String imageURL;
     private int mileage;
     private BigDecimal price;
+    private int year;
     private TransmissionEnum transmissionEnum;
 
-    public ModelDTO getModel() {
-        return model;
+    public String getModelName() {
+        return modelName;
     }
 
-    public void setModel(ModelDTO model) {
-        this.model = model;
+    public void setModelName(String modelName) {
+        this.modelName = modelName;
+    }
+
+    public String getUn() {
+        return un;
+    }
+
+    public void setUn(String un) {
+        this.un = un;
     }
 
     public String getDescription() {
@@ -63,6 +73,14 @@ public class AddOfferDto {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 
     public TransmissionEnum getTransmissionEnum() {

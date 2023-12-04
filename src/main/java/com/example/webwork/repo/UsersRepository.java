@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public interface UsersRepository extends JpaRepository<Users, String> {
 
-    Optional<Users> findByUserName(String value);
+    Optional<Users> findByUserName(String userName);
     @Modifying
     @Transactional
     void deleteByUserName(String userName);
