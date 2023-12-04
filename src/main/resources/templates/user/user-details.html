@@ -20,10 +20,12 @@
             <h4 th:text="'role: ' + ${userDetails.role.getRoleEnum()}"></h4>
             <h4 th:text="'Created: ' + ${userDetails.created}"></h4>
             <h4 th:text="'Modified: ' + ${userDetails.modified}"></h4>
-            <div class="align-bottom"><a class="btn btn-danger align-bottom" th:href="@{/users/user-delete/{user-userName}(user-userName=${userDetails.userName})}">Delete user</a>
+            <div class="align-bottom">
+              <a class="btn btn-danger align-bottom" th:href="@{/users/user-delete/{user-userName}(user-userName=${userDetails.userName})}">Delete user</a>
+              <a class="btn btn-info align-bottom" th:href="@{/users/update/{userName}(userName=${userDetails.userName})}">Update user</a>
             </div>
           </div>
-        </div>
+        </div>>
       </main>
     </div>
   </div>

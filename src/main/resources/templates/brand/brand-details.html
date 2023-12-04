@@ -18,6 +18,7 @@
             <h4 th:text="'Created: ' + ${brandDetails.created}"></h4>
             <h4 th:text="'Modified: ' + ${brandDetails.modified}"></h4>
             <div class="align-bottom"><a class="btn btn-danger align-bottom" th:href="@{/brands/brand-delete/{brand-name}(brand-name=${brandDetails.name})}">Delete brand</a>
+              <a class="btn btn-info align-bottom" th:href="@{/brands/update/{brandName}(brandName=${brandDetails.brandName})}">Update brand</a>
             </div>
           </div>
         </div>

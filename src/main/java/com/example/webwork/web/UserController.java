@@ -3,6 +3,7 @@ package com.example.webwork.web;
 import com.example.webwork.dto.UsersDTO;
 import com.example.webwork.dto.dtoss.AddUserDto;
 import com.example.webwork.except.UsersNotFoundException;
+import com.example.webwork.models.Users;
 import com.example.webwork.services.UsersService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -53,11 +54,6 @@ public class UserController {
     }
 
 
-    @PutMapping()
-    UsersDTO updateUser(@RequestBody UsersDTO users) {
-        return userService.update(users);
-    }
-
     @GetMapping("/all")
     public String showAllUsers(Model model) {
         model.addAttribute("usersInfo", userService.allUsers());
@@ -67,7 +63,6 @@ public class UserController {
     @GetMapping("/user-details/{user-userName}")
     public String userDetails(@PathVariable("user-userName") String userName, Model model) {
         model.addAttribute("userDetails", userService.userDetails(userName));
-
         return "user/user-details";
     }
 
@@ -77,7 +72,35 @@ public class UserController {
 
         return "redirect:/users/all";
     }
+    @GetMapping("/update/{userName}")
+    public String showUpdateUserForm(@PathVariable("userName") String userName, Model model) {
+        Users userDetails = userService.getUserDetails(userName);
+        model.addAttribute("userDetails", userDetails);
+        return "user/user-update";
+    }
 
+ /*   @GetMapping("/update/{userName}")
+    public String showUpdateUserForm(@PathVariable String userName, Model model) {
+        Users userDetails = userService.getUserDetails(userName);
+        model.addAttribute("userDetails", userDetails);
+        return "/user/user-update";
+    }
+*/
+ @PostMapping("/update/{userName}")
+ public String updateUser(@PathVariable String userName,
+                          @RequestParam("newFirstName") String newFirstName,
+                          @RequestParam("newLastName") String newLastName,
+                          @RequestParam("newPassword") String newPassword,
+                          @RequestParam(value = "newIsActive", defaultValue = "true") boolean newIsActive) {
+     System.out.println("userName: " + userName);
+     System.out.println("newFirstName: " + newFirstName);
+     System.out.println("newLastName: " + newLastName);
+     System.out.println("newPassword: " + newPassword);
+     System.out.println("newIsActive: " + newIsActive);
 
-
+     userService.updateUser(userName, newFirstName, newLastName, newPassword, newIsActive);
+     return "redirect:/users/all";
+ }
 }
+
+

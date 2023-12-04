@@ -7,28 +7,39 @@ import com.example.webwork.except.UsersConflictException;
 import com.example.webwork.except.UsersNotFoundException;
 import com.example.webwork.dto.UsersDTO;
 import com.example.webwork.models.Brand;
+import com.example.webwork.models.Offer;
 import com.example.webwork.models.Users;
+import com.example.webwork.repo.OfferRepository;
 import com.example.webwork.repo.RoleRepository;
 import com.example.webwork.repo.UsersRepository;
 import com.example.webwork.services.UsersService;
 import com.example.webwork.util.ValidationUtil;
 import jakarta.validation.ConstraintViolation;
 import org.modelmapper.ModelMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
 import java.util.stream.Collectors;
 
 @Service
 public class UsersServiceImpl implements UsersService {
 
+
     private final ModelMapper modelMapper;
     private UsersRepository userRepository;
+    private OfferRepository offerRepository;
     private final ValidationUtil validationUtil;
+
     @Autowired
-    public UsersServiceImpl(ModelMapper modelMapper, ValidationUtil validationUtil) {
+    public UsersServiceImpl(ModelMapper modelMapper, ValidationUtil validationUtil, OfferRepository offerRepository) {
+        this.offerRepository = offerRepository;
         this.modelMapper = modelMapper;
         this.validationUtil = validationUtil;
     }
@@ -36,7 +47,7 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public UsersDTO registerUser(UsersDTO users) {
 
-        if(!this.validationUtil.isValid(users)) {
+        if (!this.validationUtil.isValid(users)) {
             this.validationUtil
                     .violations(users)
                     .stream()
@@ -73,24 +84,6 @@ public class UsersServiceImpl implements UsersService {
         }
     }
 
-    @Override
-    public UsersDTO update(UsersDTO users) {
-
-        if(!this.validationUtil.isValid(users)) {
-            this.validationUtil
-                    .violations(users)
-                    .stream()
-                    .map(ConstraintViolation::getMessage)
-                    .forEach(System.out::println);
-            throw new IllegalArgumentException("не подходит");
-        }
-
-        if (userRepository.findById(users.getId()).isPresent()) {
-            return modelMapper.map(userRepository.save(modelMapper.map(users, Users.class)), UsersDTO.class);
-        } else {
-            throw new UsersNotFoundException(users.getId());
-        }
-    }
 
     @Autowired
     public void setUsersRepository(UsersRepository userRepository) {
@@ -98,7 +91,11 @@ public class UsersServiceImpl implements UsersService {
     }
 
     public void addUser(AddUserDto userModel) {
-        userRepository.saveAndFlush(modelMapper.map(userModel, Users.class));
+
+        Users users = modelMapper.map(userModel, Users.class);
+        users.setCreated(LocalDateTime.now());
+        users.setModified(LocalDateTime.now());
+        userRepository.saveAndFlush(users);
     }
 
     public List<ShowInfoUsers> allUsers() {
@@ -108,11 +105,32 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public ShowInfoUsers userDetails(String userName) {
-        return modelMapper.map(userRepository.findByUserName(userName).orElse(null), ShowInfoUsers.class);
+        return modelMapper.map(userRepository.findByUserName(userName), ShowInfoUsers.class);
     }
+
 
     public void removeUser(String userName) {
         userRepository.deleteByUserName(userName);
     }
 
+    public Users getUserDetails(String userName) {
+        return userRepository.findByUserName(userName);
+    }
+
+    @Transactional
+    public void updateUser(String userName, String newFirstName, String newLastName, String newPassword, boolean newIsActive) {
+        Users user = userRepository.findByUserName(userName);
+
+        if (user != null) {
+            user.setFirstName(newFirstName);
+            user.setLastName(newLastName);
+            user.setPassword(newPassword);
+            user.setActive(newIsActive);
+            user.setModified(LocalDateTime.now());
+            userRepository.save(user);
+        }
+
+    }
 }
+
+

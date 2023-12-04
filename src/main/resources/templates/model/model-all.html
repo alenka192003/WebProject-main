@@ -8,16 +8,28 @@
     <div class="row">
       <div class="col-md-2"></div>
       <div class="jumbotron text-center rounded col-md-8 align-self-center pt-5">
-        <div class="col-md-6"><img src="/pic/brand.png" height="200px"></div>
+
+        <!-- Удалено изображение -->
+
         <h2 class="text-center text-dark mt-5">All Models</h2>
-        <div th:each="m : ${modelInfo}" class="d-flex flex-column bg-text mb-3">
-          <h2 th:text="'Model: ' + ${m.name}"></h2>
-          <h4 th:text="'Category: ' + ${m.category}"></h4>
-          <!--          <h4 th:text="'Start year: ' + ${m.startYear}"></h4>-->
-          <!--          <h4 th:text="'Start year: ' + ${m.endYear}"></h4>-->
-          <h4><a class="btn-block" th:href="@{/models/model-details/{model-name}(model-name=${m.name})}">Detail
-            info</a></h4>
-        </div>
+
+        <!-- Добавлена таблица для отображения моделей -->
+        <table class="table table-bordered mt-3">
+          <thead>
+          <tr>
+            <th scope="col">Model Name</th>
+            <th scope="col">Category</th>
+            <th scope="col">Details</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="model : ${modelInfo}">
+            <td th:text="${model.name}"></td>
+            <td th:text="${model.category}"></td>
+            <td><a class="btn btn-primary" th:href="@{/models/model-details/{model-name}(model-name=${model.name})}">Detail info</a></td>
+          </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

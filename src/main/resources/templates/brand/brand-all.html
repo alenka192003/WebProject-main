@@ -9,13 +9,24 @@
       <div class="col-md-2"></div>
       <div class="jumbotron text-center rounded col-md-8 align-self-center pt-5">
         <h2 class="text-center text-dark mt-5">All Brands</h2>
-        <div th:each="c : ${brandInfo}" class="d-flex flex-column bg-text mb-3">
-          <h2 th:text="'Brand: ' + ${c.name}"></h2>
-          <h4 th:text="'Created: ' + ${c.created}"></h4>
-          <h4 th:text="'Modified: ' + ${c.modified}"></h4>
-          <h4><a class="btn-block" th:href="@{/brands/brand-details/{brand-name}(brand-name=${c.name})}">Detail
-            info</a></h4>
-        </div>
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th scope="col">Brand Name</th>
+            <th scope="col">Created</th>
+            <th scope="col">Modified</th>
+            <th scope="col">Details</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="brand : ${brandInfo}">
+            <td th:text="${brand.name}"></td>
+            <td th:text="${brand.created}"></td>
+            <td th:text="${brand.modified}"></td>
+            <td><a class="btn btn-primary" th:href="@{/brands/brand-details/{brand-name}(brand-name=${brand.name})}">Detail info</a></td>
+          </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

@@ -7,6 +7,7 @@ import com.example.webwork.except.OfferNotFoundException;
 import com.example.webwork.dto.OfferDTO;
 import com.example.webwork.models.Model;
 import com.example.webwork.models.Offer;
+import com.example.webwork.models.Users;
 import com.example.webwork.repo.ModelRepository;
 import com.example.webwork.repo.OfferRepository;
 import com.example.webwork.repo.UsersRepository;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,8 +28,8 @@ import java.util.stream.Collectors;
 public class OfferServiceImpl implements OfferService {
 
     private final ModelMapper modelMapper;
-    private  OfferRepository offerRepository;
-    private  ModelRepository modelRepository;
+    private OfferRepository offerRepository;
+    private ModelRepository modelRepository;
     private UsersRepository usersRepository;
     private final ValidationUtil validationUtil;
 
@@ -42,7 +44,7 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public OfferDTO registerOffer(OfferDTO offer) {
 
-        if(!this.validationUtil.isValid(offer)) {
+        if (!this.validationUtil.isValid(offer)) {
             this.validationUtil
                     .violations(offer)
                     .stream()
@@ -82,7 +84,7 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public OfferDTO update(OfferDTO offer) {
 
-        if(!this.validationUtil.isValid(offer)) {
+        if (!this.validationUtil.isValid(offer)) {
             this.validationUtil
                     .violations(offer)
                     .stream()
@@ -113,14 +115,14 @@ public class OfferServiceImpl implements OfferService {
     public ShowDetailedOfferDto offerDetails(String id) {
         return modelMapper.map(offerRepository.findOfferById(id).orElse(null), ShowDetailedOfferDto.class);
     }
+
     public void addOffer(AddOfferDto offerModel) {
-        Offer offer = modelMapper.map(offerModel,Offer.class);
+        Offer offer = modelMapper.map(offerModel, Offer.class);
         offer.setCreated(LocalDateTime.now());
         offer.setModel(modelRepository.findByName(offerModel.getModelName()).orElse(null));
-        offer.setUsers(usersRepository.findByUserName(offerModel.getUn()).orElse(null));
+        offer.setUsers(usersRepository.findByUserName(offerModel.getUn()));
         offer.setTransmissionEnum(offerModel.getTransmissionEnum());
         offer.setEngineEnum(offerModel.getEngineEnum());
         offerRepository.saveAndFlush(offer);
     }
-
 }

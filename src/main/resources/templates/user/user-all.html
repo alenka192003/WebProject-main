@@ -9,14 +9,28 @@
             <div class="col-md-2"></div>
             <div class="jumbotron text-center rounded col-md-8 align-self-center pt-5">
                 <h2 class="text-center text-dark mt-5">All Users</h2>
-                <div th:each="c : ${usersInfo}" class="d-flex flex-column bg-text mb-3">
-                    <h2 th:text="'User: ' + ${c.userName}"></h2>
-                    <h4 th:text="'firstName: ' + ${c.firstName}"></h4>
-                    <h4 th:text="'lastName: ' + ${c.lastName}"></h4>
-                    <h4 th:text="'role: ' + ${c.role.getRoleEnum()}"></h4>
-                    <h4><a class="btn-block" th:href="@{/users/user-details/{user-userName}(user-userName=${c.userName})}">Detail
-                        info</a></h4>
-                </div>
+
+                <!-- Добавлена таблица для отображения пользователей -->
+                <table class="table table-bordered mt-30" style="width: 100%; font-size: 18px;">
+                    <thead>
+                    <tr>
+                        <th scope="col">User Name</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Details</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user : ${usersInfo}">
+                        <td th:text="${user.userName}"></td>
+                        <td th:text="${user.firstName}"></td>
+                        <td th:text="${user.lastName}"></td>
+                        <td th:text="${user.role.getRoleEnum()}"></td>
+                        <td><a class="btn btn-primary" th:href="@{/users/user-details/{user-userName}(user-userName=${user.userName})}">Detail info</a></td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
