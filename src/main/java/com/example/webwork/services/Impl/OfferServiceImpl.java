@@ -124,4 +124,6 @@ public class OfferServiceImpl implements OfferService {
         offer.setEngineEnum(offerModel.getEngineEnum());
         offerRepository.saveAndFlush(offer);
     }
+
+    public void removeOffer(String id) {offerRepository.deleteById(id);}
 }

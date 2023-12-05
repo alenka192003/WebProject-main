@@ -17,7 +17,7 @@ public interface OfferService {
     void expel(String id);
     OfferDTO update(OfferDTO offer);
     List<ShowInfoOffer> allOffers();
-
+    void removeOffer(String id);
     ShowDetailedOfferDto offerDetails(String id);
     void addOffer(AddOfferDto offerModel);
 

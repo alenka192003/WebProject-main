@@ -1,9 +1,12 @@
 package com.example.webwork.services.Impl;
 
 import com.example.webwork.dto.dtoss.*;
+import com.example.webwork.except.BrandNotFoundException;
 import com.example.webwork.except.UsersConflictException;
 import com.example.webwork.except.UsersNotFoundException;
 import com.example.webwork.dto.UsersDTO;
+import com.example.webwork.models.Brand;
+import com.example.webwork.models.Model;
 import com.example.webwork.models.Offer;
 import com.example.webwork.models.Users;
 import com.example.webwork.repo.OfferRepository;
@@ -103,9 +106,9 @@ public class UsersServiceImpl implements UsersService {
     public List<ShowInfoOffer> getOffersByUserName(String userName) {
         Users user = userRepository.findByUserName(userName);
 
-        List<Offer> offers = offerRepository.findByUsers(user);
+        List<Offer> offers = offerRepository.findByUsersId(user.getId());
         return offers.stream()
-                .map(model -> modelMapper.map(offers, ShowInfoOffer.class))
+                .map(offer -> modelMapper.map(offer, ShowInfoOffer.class))
                 .collect(Collectors.toList());
     }
 

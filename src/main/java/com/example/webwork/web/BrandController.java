@@ -1,10 +1,11 @@
 package com.example.webwork.web;
 
-import com.example.webwork.dto.BrandDTO;
 import com.example.webwork.dto.dtoss.AddBrandDto;
 import com.example.webwork.dto.dtoss.ShowModelInfoDto;
-import com.example.webwork.except.BrandNotFoundException;
+import com.example.webwork.dto.dtoss.UpdateBrandDto;
+import com.example.webwork.dto.dtoss.UpdateUserDto;
 import com.example.webwork.models.Brand;
+import com.example.webwork.repo.BrandRepository;
 import com.example.webwork.services.BrandService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -20,8 +21,10 @@ import java.util.Optional;
 @RequestMapping("/brands")
 public class BrandController {
     private final BrandService brandService;
-    public BrandController(BrandService brandService) {
+    private final BrandRepository brandRepository;
+    public BrandController(BrandService brandService, BrandRepository brandRepository) {
         this.brandService = brandService;
+        this.brandRepository = brandRepository;
     }
 
     @GetMapping("/all")
@@ -72,6 +75,28 @@ public class BrandController {
     public String deleteCompany(@PathVariable("brand-name") String brandName) {
         brandService.removeBrand(brandName);
 
+        return "redirect:/brands/all";
+    }
+
+    @GetMapping("/update/{brand-name}")
+    public String updateBrandForm(@PathVariable("brand-name") String name, Model model) {
+        Optional<Brand> brand = brandRepository.findByName(name);
+        model.addAttribute("brand", brand);
+        model.addAttribute("updateBrandForm", new UpdateBrandDto());
+        return "/brand/brand-update";
+    }
+
+    @PostMapping("/update/{brand-name}")
+    public String updateBrand(@PathVariable("brand-name") String name, @Valid UpdateBrandDto updateBrandDto,
+                             BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("updateBrandDto", updateBrandDto);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.updateBrandDto",
+                    bindingResult);
+            return "redirect:/brands/update/" + name;
+        }
+
+        brandService.updateBrand(name, updateBrandDto);
         return "redirect:/brands/all";
     }
 }

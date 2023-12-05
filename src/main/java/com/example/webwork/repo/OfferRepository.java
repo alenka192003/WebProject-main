@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface OfferRepository extends JpaRepository<Offer, String> {
-    List<Offer> findByUsers(Users user);
+    List<Offer> findByUsersId(String id);
 
     Optional<Offer> findOfferByUsersId(String id);
 }

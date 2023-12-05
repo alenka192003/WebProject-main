@@ -35,11 +35,6 @@ public class OfferController {
         return offerService.registerOffer(offer);
     }
 
-    @DeleteMapping("/{id}")
-    void deleteOffer(@PathVariable String id) {
-        offerService.expel(id);
-    }
-
     @GetMapping("/add")
     public String addOffer(Model model) {
         model.addAttribute("availableModels", modelService.allModels());
@@ -84,6 +79,12 @@ public class OfferController {
         model.addAttribute("offerDetails", offerService.offerDetails(id));
 
         return "offer/offer-details";
+    }
+    @GetMapping("/offer-delete/{offer-id}")
+    public String deleteOffer(@PathVariable("offer-id") String id) {
+        offerService.removeOffer(id);
+
+        return "redirect:/offers/all";
     }
 
     /*@GetMapping("/offer-details/{offer-userName}")

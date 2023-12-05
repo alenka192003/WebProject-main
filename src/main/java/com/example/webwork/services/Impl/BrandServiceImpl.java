@@ -1,13 +1,13 @@
 package com.example.webwork.services.Impl;
 
-import com.example.webwork.dto.dtoss.AddBrandDto;
-import com.example.webwork.dto.dtoss.ShowDetailedBrandInfoDto;
-import com.example.webwork.dto.dtoss.ShowModelInfoDto;
+import com.example.webwork.dto.dtoss.*;
 import com.example.webwork.except.BrandConflictException;
 import com.example.webwork.except.BrandNotFoundException;
 import com.example.webwork.dto.BrandDTO;
+import com.example.webwork.except.UsersNotFoundException;
 import com.example.webwork.models.Brand;
 import com.example.webwork.models.Model;
+import com.example.webwork.models.Users;
 import com.example.webwork.repo.BrandRepository;
 import com.example.webwork.repo.ModelRepository;
 import com.example.webwork.services.BrandService;
@@ -108,5 +108,14 @@ public class BrandServiceImpl implements BrandService {
         brandDto.setModified(LocalDateTime.now());
         Brand brand = modelMapper.map(brandDto,Brand.class);
         brandRepository.saveAndFlush(modelMapper.map(brandDto, Brand.class));
+    }
+
+    @Override
+    public void updateBrand(String name, UpdateBrandDto updateBrandDto) {
+        brandRepository.findByName(name).ifPresent(brand -> {
+            brand.setName(updateBrandDto.getName());
+            brand.setModified(LocalDateTime.now());
+            brandRepository.save(brand);
+        });
     }
 }

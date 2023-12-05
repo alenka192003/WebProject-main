@@ -1,10 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head">
+    <title>Update Brand</title>
 </head>
-<body>
+<body class="d-flex flex-column h-100">
+<div th:replace="fragments/navbar" class="bg-dark text-white p-3">Navbar</div>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">Update Brand</h2>
 
+                    <!-- Thymeleaf form with Spring model attribute -->
+                    <form th:object="${updateBrandForm}" th:action="@{/brands/update/{brand-name}(brand-name=${brand.get().name})}" method="post">
+                        <!-- Thymeleaf hidden field for brand name -->
+                        <input type="hidden" id="name" th:field="*{name}" th:value="${brand.get().name}"/>
+
+                        <!-- fields -->
+                        <div class="form-group">
+                            <label for="brandName">Brand Name:</label>
+                            <div class="input-group">
+                                <input type="text" id="brandName" name="brandName" th:field="*{name}"
+                                       class="form-control" placeholder="New Brand Name"/>
+                                <div>
+                                    <button type="submit" class="btn btn-primary btn-block">Update</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="fragments/footer"></footer>
 </body>
 </html>

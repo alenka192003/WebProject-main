@@ -1,10 +1,7 @@
 package com.example.webwork.services;
 
 import com.example.webwork.dto.BrandDTO;
-import com.example.webwork.dto.dtoss.AddBrandDto;
-import com.example.webwork.dto.dtoss.AddUserDto;
-import com.example.webwork.dto.dtoss.ShowDetailedBrandInfoDto;
-import com.example.webwork.dto.dtoss.ShowModelInfoDto;
+import com.example.webwork.dto.dtoss.*;
 import com.example.webwork.models.Brand;
 
 import java.util.List;
@@ -22,4 +19,5 @@ public interface BrandService {
     List<ShowDetailedBrandInfoDto> allBrands();
 
     void removeBrand(String brandName);
+    void updateBrand(String name, UpdateBrandDto updateBrandDto);
 }
