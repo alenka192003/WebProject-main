@@ -1,6 +1,7 @@
 package com.example.webwork.dto.dtoss;
 
 import com.example.webwork.dto.RoleDTO;
+import com.example.webwork.enums.RoleEnum;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -47,8 +48,8 @@ public class AddUserDto {
         return lastName;
     }
 
-    private RoleDTO role;
-    public RoleDTO getRole(){
+    private RoleEnum role;
+    public RoleEnum getRole(){
         return role;
     }
 
@@ -60,7 +61,18 @@ public class AddUserDto {
         this.lastName = lastName;
     }
 
-    public void setRole(RoleDTO role) {
+    public void setRole(RoleEnum role) {
         this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return "AddUserDto{" +
+                "userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", role=" + role +
+                '}';
     }
 }

@@ -90,7 +90,7 @@ public class OfferController {
     public String offerDetails(@PathVariable("offer-userName") String userName, Model model) {
         model.addAttribute("offerDetails", offerService.offerDetails(userName));
 
-        return "offers/brand-details";
+        return "offer/offer-details";
     }
 
 }

@@ -22,7 +22,7 @@ public class Users extends Base {
     @Column(name="lastName", length = 255, nullable = false)
     private String lastName;
     private boolean isActive;
-    @Column(name="imageURL", length = 255, nullable = false)
+    @Column(name="imageURL", length = 255)
     private String imageURL;
 
     protected Users() {};

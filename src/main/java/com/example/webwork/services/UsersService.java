@@ -24,6 +24,5 @@ public interface UsersService {
 
     void removeUser(String userName);
     Users getUserDetails(String userName);
-    void updateUser(String userName,String newUserName,String newFirstName, String newLastName, String newPassword, boolean newIsActive);
-
+    void updateUser(String userName, UpdateUserDto updateUserDto);
 }
