@@ -3,10 +3,12 @@ package com.example.webwork.services.Impl;
 import com.example.webwork.dto.BrandDTO;
 import com.example.webwork.dto.dtoss.*;
 import com.example.webwork.except.BrandConflictException;
+import com.example.webwork.except.BrandNotFoundException;
 import com.example.webwork.except.UsersConflictException;
 import com.example.webwork.except.UsersNotFoundException;
 import com.example.webwork.dto.UsersDTO;
 import com.example.webwork.models.Brand;
+import com.example.webwork.models.Model;
 import com.example.webwork.models.Offer;
 import com.example.webwork.models.Users;
 import com.example.webwork.repo.OfferRepository;
@@ -108,6 +110,15 @@ public class UsersServiceImpl implements UsersService {
         return modelMapper.map(userRepository.findByUserName(userName), ShowInfoUsers.class);
     }
 
+    @Override
+    public List<ShowInfoOffer> getOffersByUserName(String userName) {
+        Users user = userRepository.findByUserName(userName);
+
+        List<Offer> offers = offerRepository.findByUsers(user);
+        return offers.stream()
+                .map(model -> modelMapper.map(offers, ShowInfoOffer.class))
+                .collect(Collectors.toList());
+    }
 
     public void removeUser(String userName) {
         userRepository.deleteByUserName(userName);
@@ -118,10 +129,11 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Transactional
-    public void updateUser(String userName, String newFirstName, String newLastName, String newPassword, boolean newIsActive) {
+    public void updateUser(String userName,String newUserName,String newFirstName, String newLastName, String newPassword, boolean newIsActive) {
         Users user = userRepository.findByUserName(userName);
 
         if (user != null) {
+            user.setUserName(newUserName);
             user.setFirstName(newFirstName);
             user.setLastName(newLastName);
             user.setPassword(newPassword);
@@ -129,6 +141,7 @@ public class UsersServiceImpl implements UsersService {
             user.setModified(LocalDateTime.now());
             userRepository.save(user);
         }
+
 
     }
 }

@@ -2,7 +2,9 @@ package com.example.webwork.web;
 
 import com.example.webwork.dto.BrandDTO;
 import com.example.webwork.dto.dtoss.AddBrandDto;
+import com.example.webwork.dto.dtoss.ShowModelInfoDto;
 import com.example.webwork.except.BrandNotFoundException;
+import com.example.webwork.models.Brand;
 import com.example.webwork.services.BrandService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -11,17 +13,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/brands")
 public class BrandController {
     private final BrandService brandService;
     public BrandController(BrandService brandService) {
         this.brandService = brandService;
-    }
-
-    @GetMapping("/{id}")
-    BrandDTO getBrand(@PathVariable String id) {
-        return brandService.findById(id).orElseThrow(() -> new BrandNotFoundException(id));
     }
 
     @GetMapping("/all")
@@ -48,11 +48,6 @@ public class BrandController {
         return new AddBrandDto();
     }
 
-    @PutMapping()
-    BrandDTO updateBrand(@RequestBody BrandDTO brandModel) {
-        return brandService.update(brandModel);
-    }
-
     @PostMapping("/add")
     public String addBrand(@Valid AddBrandDto brandModel, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
@@ -69,7 +64,8 @@ public class BrandController {
     @GetMapping("/brand-details/{brand-name}")
     public String brandDetails(@PathVariable("brand-name") String brandName, Model model) {
         model.addAttribute("brandDetails", brandService.brandDetails(brandName));
-
+        List<ShowModelInfoDto> models = brandService.getModelsByBrand(brandName);
+        model.addAttribute("models", models);
         return "brand/brand-details";
     }
     @GetMapping("/brand-delete/{brand-name}")
@@ -78,5 +74,4 @@ public class BrandController {
 
         return "redirect:/brands/all";
     }
-
 }

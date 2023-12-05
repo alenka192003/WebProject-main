@@ -18,8 +18,31 @@
             <h4 th:text="'Created: ' + ${brandDetails.created}"></h4>
             <h4 th:text="'Modified: ' + ${brandDetails.modified}"></h4>
             <div class="align-bottom"><a class="btn btn-danger align-bottom" th:href="@{/brands/brand-delete/{brand-name}(brand-name=${brandDetails.name})}">Delete brand</a>
-              <a class="btn btn-info align-bottom" th:href="@{/brands/update/{brandName}(brandName=${brandDetails.brandName})}">Update brand</a>
+              <a class="btn btn-info align-bottom" th:href="@{/brands/update/{brandName}(brandName=${brandDetails.name})}">Update brand</a>
             </div>
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-md-12">
+            <h2>Models</h2>
+            <table class="table table-bordered">
+              <thead>
+              <tr>
+                <th>Model Name</th>
+                <th>Created</th>
+                <th>Modified</th>
+                <!-- Добавьте другие необходимые заголовки столбцов -->
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="models : ${models}">
+                <td th:text="${models.name}"></td>
+                <td th:text="${models.created}"></td>
+                <td th:text="${models.modified}"></td>
+                <!-- Добавьте другие необходимые ячейки данных -->
+              </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </main>

@@ -2,10 +2,7 @@ package com.example.webwork.services;
 
 
 import com.example.webwork.dto.UsersDTO;
-import com.example.webwork.dto.dtoss.AddUserDto;
-import com.example.webwork.dto.dtoss.ShowDetailedBrandInfoDto;
-import com.example.webwork.dto.dtoss.ShowInfoUsers;
-import com.example.webwork.dto.dtoss.ShowModelInfoDto;
+import com.example.webwork.dto.dtoss.*;
 import com.example.webwork.models.Offer;
 import com.example.webwork.models.Users;
 
@@ -21,11 +18,12 @@ public interface UsersService {
     List<UsersDTO> getAll();
 
     Optional<UsersDTO> findById(String id);
-
+    List<ShowInfoOffer> getOffersByUserName(String userName);
     void expel(String id);
     ShowInfoUsers userDetails(String userName);
 
     void removeUser(String userName);
     Users getUserDetails(String userName);
-    void updateUser(String userName,String newFirstName, String newLastName, String newPassword, boolean newIsActive);
+    void updateUser(String userName,String newUserName,String newFirstName, String newLastName, String newPassword, boolean newIsActive);
+
 }

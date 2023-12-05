@@ -3,6 +3,7 @@ package com.example.webwork.repo;
 import com.example.webwork.dto.BrandDTO;
 import com.example.webwork.dto.ModelDTO;
 import com.example.webwork.enums.CategoryEnum;
+import com.example.webwork.models.Brand;
 import com.example.webwork.models.Model;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -19,6 +20,7 @@ public interface ModelRepository extends JpaRepository<Model, String> {
     List<ModelDTO> findAllByName(@Param("name") String name);
 
     Optional<Model> findByName(String name);
+    List<Model> findByBrand(Brand brand);
     @Modifying
     @Transactional
     Optional<Model> deleteByName(String modelName);

@@ -12,6 +12,7 @@ import java.util.Optional;
 
 public interface BrandRepository extends JpaRepository<Brand, String> {
     Optional<Brand> findByName(String name);
+    Optional<Brand> findById(String id);
     @Modifying
     @Transactional
     Optional<Brand> deleteByName(String brandName);

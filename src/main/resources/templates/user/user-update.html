@@ -32,10 +32,14 @@
                 <input type="checkbox" class="form-check-input" id="currentIsActive" th:checked="${userDetails.isActive}" disabled/>
                 <label class="form-check-label" for="currentIsActive">Is Active</label>
               </div>
-            </form>>
+            </form>
           </div>
           <!-- Поля для ввода новых данных пользователя -->
           <div class="col-md-6 pt-3">
+            <div class="form-group">
+              <label for="newFirstName">New User Name:</label>
+              <input type="text" class="form-control" id="newUserName" name="newUserName"/>
+            </div>
             <div class="form-group">
               <label for="newFirstName">New First Name:</label>
               <input type="text" class="form-control" id="newFirstName" name="newFirstName"/>

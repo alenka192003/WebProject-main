@@ -1,6 +1,7 @@
 package com.example.webwork.repo;
 
 import com.example.webwork.enums.RoleEnum;
+import com.example.webwork.models.Brand;
 import com.example.webwork.models.Model;
 import com.example.webwork.models.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,6 +16,7 @@ import java.util.Optional;
 public interface UsersRepository extends JpaRepository<Users, String> {
 
     Users findByUserName(String userName);
+
 
     @Modifying
     @Transactional

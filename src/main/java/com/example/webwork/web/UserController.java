@@ -2,6 +2,9 @@ package com.example.webwork.web;
 
 import com.example.webwork.dto.UsersDTO;
 import com.example.webwork.dto.dtoss.AddUserDto;
+import com.example.webwork.dto.dtoss.ShowInfoOffer;
+import com.example.webwork.dto.dtoss.ShowModelInfoDto;
+import com.example.webwork.dto.dtoss.UpdateUserDto;
 import com.example.webwork.except.UsersNotFoundException;
 import com.example.webwork.models.Users;
 import com.example.webwork.services.UsersService;
@@ -11,6 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/users")
@@ -63,6 +68,8 @@ public class UserController {
     @GetMapping("/user-details/{user-userName}")
     public String userDetails(@PathVariable("user-userName") String userName, Model model) {
         model.addAttribute("userDetails", userService.userDetails(userName));
+        List<ShowInfoOffer> offers = userService.getOffersByUserName(userName);
+        model.addAttribute("offers", offers);
         return "user/user-details";
     }
 
@@ -86,21 +93,46 @@ public class UserController {
         return "/user/user-update";
     }
 */
- @PostMapping("/update/{userName}")
+ /*@PostMapping("/update/{userName}")
  public String updateUser(@PathVariable String userName,
+                          @RequestParam("newFirstName") String newUserName,
                           @RequestParam("newFirstName") String newFirstName,
                           @RequestParam("newLastName") String newLastName,
                           @RequestParam("newPassword") String newPassword,
                           @RequestParam(value = "newIsActive", defaultValue = "true") boolean newIsActive) {
      System.out.println("userName: " + userName);
+     System.out.println("newFirstName: " + newUserName);
      System.out.println("newFirstName: " + newFirstName);
      System.out.println("newLastName: " + newLastName);
      System.out.println("newPassword: " + newPassword);
      System.out.println("newIsActive: " + newIsActive);
 
-     userService.updateUser(userName, newFirstName, newLastName, newPassword, newIsActive);
+     userService.updateUser(userName,newUserName, newFirstName, newLastName, newPassword, newIsActive);
      return "redirect:/users/all";
- }
+ }*/
+
+   /* @ModelAttribute("userModelUpdate")
+    public UpdateUserDto initUser() {
+        return new UpdateUserDto();
+    }
+    @GetMapping("/update")
+    public String updateUser() {
+        return "user/user-update";
+    }
+*/
+    /*@PostMapping("/update")
+    public String updateUser(@PathVariable ("id") U userName,@Valid UpdateUserDto userModelUpdate, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("userModelUpdate", userModelUpdate);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userModelUpdate",
+                    bindingResult);
+            return "redirect:/users/update";
+        }
+        userService.findById()
+        userService.updateUser(userModelUpdate.getnewUserName(),userModelUpdate.getnewFirstName(),userModelUpdate.getnewLastName(), userModelUpdate.getPassword(),userModelUpdate.getIsActive());
+
+        return "redirect:/";
+    }*/
 }
 
 

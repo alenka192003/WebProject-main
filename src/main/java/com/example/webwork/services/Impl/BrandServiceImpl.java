@@ -2,11 +2,14 @@ package com.example.webwork.services.Impl;
 
 import com.example.webwork.dto.dtoss.AddBrandDto;
 import com.example.webwork.dto.dtoss.ShowDetailedBrandInfoDto;
+import com.example.webwork.dto.dtoss.ShowModelInfoDto;
 import com.example.webwork.except.BrandConflictException;
 import com.example.webwork.except.BrandNotFoundException;
 import com.example.webwork.dto.BrandDTO;
 import com.example.webwork.models.Brand;
+import com.example.webwork.models.Model;
 import com.example.webwork.repo.BrandRepository;
+import com.example.webwork.repo.ModelRepository;
 import com.example.webwork.services.BrandService;
 import com.example.webwork.util.ValidationUtil;
 import jakarta.validation.ConstraintViolation;
@@ -24,11 +27,14 @@ public class BrandServiceImpl implements BrandService {
 
     private final ModelMapper modelMapper;
     private  BrandRepository brandRepository;
+    private ModelRepository modelRepository;
+
     private final ValidationUtil validationUtil;
 
     @Autowired
-    public BrandServiceImpl(ModelMapper modelMapper, ValidationUtil validationUtil) {
+    public BrandServiceImpl(ModelMapper modelMapper, ModelRepository modelRepository, ValidationUtil validationUtil) {
         this.modelMapper = modelMapper;
+        this.modelRepository = modelRepository;
         this.validationUtil = validationUtil;
     }
     @Override
@@ -56,10 +62,20 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public Optional<BrandDTO> findById(String id) {
-        return Optional.ofNullable(modelMapper.map(brandRepository.findById(id), BrandDTO.class));
+    public Optional<Brand> findById(String id) {
+        return Optional.empty();
     }
 
+
+    @Override
+    public List<ShowModelInfoDto> getModelsByBrand(String brandName) {
+        Brand brand = brandRepository.findByName(brandName).orElseThrow(() -> new BrandNotFoundException("Brand not found with name: " + brandName));
+
+        List<Model> models = modelRepository.findByBrand(brand);
+        return models.stream()
+                .map(model -> modelMapper.map(model, ShowModelInfoDto.class))
+                .collect(Collectors.toList());
+    }
 
     @Override
     public void expel(String id) {
@@ -70,46 +86,9 @@ public class BrandServiceImpl implements BrandService {
         }
     }
 
-    @Override
-    public BrandDTO update(BrandDTO brand) {
-
-        if(!this.validationUtil.isValid(brand)) {
-            this.validationUtil
-                    .violations(brand)
-                    .stream()
-                    .map(ConstraintViolation::getMessage)
-                    .forEach(System.out::println);
-            throw new IllegalArgumentException("не подходит");
-        }
-
-        if (brandRepository.findById(brand.getId()).isPresent()) {
-            return modelMapper.map(brandRepository.save(modelMapper.map(brand, Brand.class)), BrandDTO.class);
-        } else {
-            throw new BrandNotFoundException(brand.getId());
-        }
-    }
     @Autowired
     public void setBrandRepository(BrandRepository brandRepository) {
         this.brandRepository = brandRepository;
-    }
-
-    @Override
-    public BrandDTO registerBrand_1(AddBrandDto brand) {
-        if (!this.validationUtil.isValid(brand)) {
-            this.validationUtil
-                    .violations(brand)
-                    .stream()
-                    .map(ConstraintViolation::getMessage)
-                    .forEach(System.out::println);
-            throw new IllegalArgumentException("не подходит");
-        }
-        Brand b = modelMapper.map(brand, Brand.class);
-        String brandId = b.getId();
-        if (brandId == null || brandRepository.findById(brandId).isEmpty()) {
-            return modelMapper.map(brandRepository.save(b), BrandDTO.class);
-        } else {
-            throw new BrandConflictException("уже существует с таким id");
-        }
     }
 
     public List<ShowDetailedBrandInfoDto> allBrands() {
