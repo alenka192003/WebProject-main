@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class ShowDetailedOfferDto {
+    private String id;
     private String modelName;
     private String un;
     private String description;
@@ -34,6 +35,14 @@ public class ShowDetailedOfferDto {
 
     public void setUn(String un) {
         this.un = un;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getDescription() {

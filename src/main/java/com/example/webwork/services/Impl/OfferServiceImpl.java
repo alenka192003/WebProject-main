@@ -111,9 +111,8 @@ public class OfferServiceImpl implements OfferService {
                 .collect(Collectors.toList());
     }
 
-    @Override
     public ShowDetailedOfferDto offerDetails(String id) {
-        return modelMapper.map(offerRepository.findOfferById(id).orElse(null), ShowDetailedOfferDto.class);
+        return modelMapper.map(offerRepository.findById(id).orElse(null), ShowDetailedOfferDto.class);
     }
 
     public void addOffer(AddOfferDto offerModel) {

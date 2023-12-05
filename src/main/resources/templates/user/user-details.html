@@ -2,27 +2,27 @@
 <html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/head"/>
 <body class="d-flex flex-column h-100">
-<div th:replace="fragments/navbar">Navbar</div>
+<div th:replace="fragments/navbar" class="bg-dark text-white p-3">Navbar</div>
 <main class="flex-shrink-0">
   <div class="container">
     <div class="row">
       <div class="col-md-2"></div>
-      <main class="jumbotron text-center rounded col-md-12 align-self-center pt-5">
-        <div class="justify-content-center">
-          <h1>User Details</h1>
+      <main class="jumbotron text-center rounded col-md-12 align-self-center mt-5">
+        <div class="d-flex justify-content-center">
+          <h1 class="display-4">User Details</h1>
         </div>
-        <div class="row bg-light rounded">
+        <div class="row bg-light rounded mt-4">
           <div class="col-md-6 pt-3">
-            <h2>User</h2>
-            <h2 th:text="'UserName: ' + ${userDetails.userName}"></h2>
-            <h4 th:text="'firstName: ' + ${userDetails.firstName}"></h4>
-            <h4 th:text="'lastName: ' + ${userDetails.lastName}"></h4>
-            <h4 th:text="'role: ' + ${userDetails.role.getRoleEnum()}"></h4>
-            <h4 th:text="'Created: ' + ${userDetails.created}"></h4>
-            <h4 th:text="'Modified: ' + ${userDetails.modified}"></h4>
-            <div class="align-bottom">
-              <a class="btn btn-danger align-bottom" th:href="@{/users/user-delete/{user-userName}(user-userName=${userDetails.userName})}">Delete user</a>
-              <a class="btn btn-info align-bottom" th:href="@{/users/update/{userName}(userName=${userDetails.userName})}">Update user</a>
+            <h2 class="display-5">User</h2>
+            <h4 th:text="'UserName: ' + ${userDetails.userName}" class="h5"></h4>
+            <h4 th:text="'First Name: ' + ${userDetails.firstName}" class="h5"></h4>
+            <h4 th:text="'Last Name: ' + ${userDetails.lastName}" class="h5"></h4>
+            <h4 th:text="'Role: ' + ${userDetails.role.getRoleEnum()}" class="h5"></h4>
+            <h4 th:text="'Created: ' + ${userDetails.created}" class="h5"></h4>
+            <h4 th:text="'Modified: ' + ${userDetails.modified}" class="h5"></h4>
+            <div class="mt-3">
+              <a class="btn btn-danger" th:href="@{/users/user-delete/{user-userName}(user-userName=${userDetails.userName})}">Delete user</a>
+              <a class="btn btn-info ml-2" th:href="@{/users/update/{userName}(userName=${userDetails.userName})}">Update user</a>
             </div>
           </div>
         </div>
@@ -30,27 +30,29 @@
     </div>
     <div class="row mt-5">
       <div class="col-md-12">
-        <h2>Offers</h2>
-        <table class="table table-bordered">
+        <h2 class="display-5">Offers</h2>
+        <table class="table table-bordered mt-3">
           <thead>
           <tr>
-            <th>Price </th>
+            <th>Price</th>
             <th>Model Name</th>
             <th>Engine</th>
             <!-- Добавьте другие необходимые заголовки столбцов -->
           </tr>
           </thead>
-
-          <div th:each="offer : ${offers}">
-            <p th:text="${offer.price}"></p>
-            <p th:text="${offer.model?.name}"></p>
-            <p th:text="${offer.engineEnum}"></p>
-          </div>
+          <tbody>
+          <tr th:each="offer : ${offers}">
+            <td th:text="${offer.price}"></td>
+            <td th:text="${offer.model?.name}"></td>
+            <td th:text="${offer.engineEnum}"></td>
+            <!-- Добавьте другие необходимые ячейки данных -->
+          </tr>
+          </tbody>
         </table>
       </div>
     </div>
   </div>
 </main>
-<footer th:replace="fragments/footer"/>
+<footer th:replace="fragments/footer" class="mt-auto bg-dark text-white p-3"/>
 </body>
 </html>

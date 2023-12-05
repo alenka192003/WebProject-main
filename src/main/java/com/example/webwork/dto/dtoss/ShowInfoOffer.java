@@ -1,19 +1,30 @@
 package com.example.webwork.dto.dtoss;
 
 import com.example.webwork.dto.ModelDTO;
+import com.example.webwork.dto.UsersDTO;
 import com.example.webwork.enums.EngineEnum;
 import com.example.webwork.enums.TransmissionEnum;
 
 import java.math.BigDecimal;
 
 public class ShowInfoOffer {
+    private String id;
     private ModelDTO model;
+    private UsersDTO usersDTO;
     private String description;
     private EngineEnum engineEnum;
     private String imageURL;
     private int mileage;
     private BigDecimal price;
     private TransmissionEnum transmissionEnum;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public ModelDTO getModel() {
         return model;
@@ -65,6 +76,14 @@ public class ShowInfoOffer {
 
     public TransmissionEnum getTransmissionEnum() {
         return transmissionEnum;
+    }
+
+    public UsersDTO getUsersDTO() {
+        return usersDTO;
+    }
+
+    public void setUsersDTO(UsersDTO usersDTO) {
+        this.usersDTO = usersDTO;
     }
 
     public void setTransmissionEnum(TransmissionEnum transmissionEnum) {

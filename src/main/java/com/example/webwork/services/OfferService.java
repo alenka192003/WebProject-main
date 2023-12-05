@@ -4,6 +4,7 @@ import com.example.webwork.dto.ModelDTO;
 import com.example.webwork.dto.OfferDTO;
 import com.example.webwork.dto.UsersDTO;
 import com.example.webwork.dto.dtoss.*;
+import com.example.webwork.models.Model;
 import com.example.webwork.models.Offer;
 
 import java.util.List;

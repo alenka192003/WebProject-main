@@ -79,18 +79,18 @@ public class OfferController {
         return "offer/offer-all";
     }
 
-    @GetMapping("/offer-details/{offer-id}")
-    public String offerDetails(@PathVariable("offer-id") OfferDTO offer, Model model) {
-        model.addAttribute("offerDetails", offerService.offerDetails(offer.getId()));
+    @GetMapping("/offers-details/{offer-id}")
+    public String offerDetails(@PathVariable("offer-id") String id, Model model) {
+        model.addAttribute("offerDetails", offerService.offerDetails(id));
 
-        return "/offer/offer-details";
+        return "offer/offer-details";
     }
 
-    @GetMapping("/offer-details/{offer-userName}")
+    /*@GetMapping("/offer-details/{offer-userName}")
     public String offerDetails(@PathVariable("offer-userName") String userName, Model model) {
         model.addAttribute("offerDetails", offerService.offerDetails(userName));
 
         return "offer/offer-details";
     }
-
+*/
 }

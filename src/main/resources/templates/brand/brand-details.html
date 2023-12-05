@@ -2,30 +2,31 @@
 <html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/head"/>
 <body class="d-flex flex-column h-100">
-<div th:replace="fragments/navbar">Navbar</div>
+<div th:replace="fragments/navbar" class="bg-dark text-white p-3">Navbar</div>
 <main class="flex-shrink-0">
   <div class="container">
     <div class="row">
       <div class="col-md-2"></div>
-      <main class="jumbotron text-center rounded col-md-12 align-self-center pt-5">
-        <div class="justify-content-center">
-          <h1>Brand Details</h1>
+      <main class="jumbotron text-center rounded col-md-12 align-self-center mt-5">
+        <div class="d-flex justify-content-center">
+          <h1 class="display-4">Brand Details</h1>
         </div>
-        <div class="row bg-light rounded">
+        <div class="row bg-light rounded mt-4">
           <div class="col-md-6 pt-3">
-            <h2>Brand</h2>
-            <h2 th:text="'Brand: ' + ${brandDetails.name}"></h2>
-            <h4 th:text="'Created: ' + ${brandDetails.created}"></h4>
-            <h4 th:text="'Modified: ' + ${brandDetails.modified}"></h4>
-            <div class="align-bottom"><a class="btn btn-danger align-bottom" th:href="@{/brands/brand-delete/{brand-name}(brand-name=${brandDetails.name})}">Delete brand</a>
-              <a class="btn btn-info align-bottom" th:href="@{/brands/update/{brandName}(brandName=${brandDetails.name})}">Update brand</a>
+            <h2 class="display-5">Brand</h2>
+            <h4 th:text="'Name: ' + ${brandDetails.name}" class="h5"></h4>
+            <h4 th:text="'Created: ' + ${brandDetails.created}" class="h5"></h4>
+            <h4 th:text="'Modified: ' + ${brandDetails.modified}" class="h5"></h4>
+            <div class="mt-3">
+              <a class="btn btn-danger" th:href="@{/brands/brand-delete/{brand-name}(brand-name=${brandDetails.name})}">Delete brand</a>
+              <a class="btn btn-info ml-2" th:href="@{/brands/update/{brandName}(brandName=${brandDetails.name})}">Update brand</a>
             </div>
           </div>
         </div>
         <div class="row mt-5">
           <div class="col-md-12">
-            <h2>Models</h2>
-            <table class="table table-bordered">
+            <h2 class="display-5">Models</h2>
+            <table class="table table-bordered mt-3">
               <thead>
               <tr>
                 <th>Model Name</th>
@@ -35,10 +36,10 @@
               </tr>
               </thead>
               <tbody>
-              <tr th:each="models : ${models}">
-                <td th:text="${models.name}"></td>
-                <td th:text="${models.created}"></td>
-                <td th:text="${models.modified}"></td>
+              <tr th:each="model : ${models}">
+                <td th:text="${model.name}"></td>
+                <td th:text="${model.created}"></td>
+                <td th:text="${model.modified}"></td>
                 <!-- Добавьте другие необходимые ячейки данных -->
               </tr>
               </tbody>
@@ -49,6 +50,6 @@
     </div>
   </div>
 </main>
-<footer th:replace="fragments/footer"/>
+<footer th:replace="fragments/footer" class="mt-auto bg-dark text-white p-3"/>
 </body>
 </html>

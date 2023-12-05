@@ -4,34 +4,35 @@
 <body class="d-flex flex-column h-100">
 <div th:replace="fragments/navbar">Navbar</div>
 <main class="flex-shrink-0">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-2"></div>
-      <div class="jumbotron text-center rounded col-md-8 align-self-center pt-5">
+  <div class="container d-flex justify-content-center align-items-center h-100">
+    <div class="jumbotron text-center rounded col-md-8 pt-5">
 
-        <!-- Удалено изображение -->
+      <h2 class="text-center text-dark mt-5">All Models</h2>
 
-        <h2 class="text-center text-dark mt-5">All Models</h2>
+      <!-- Таблица для отображения моделей -->
+      <table class="table table-bordered mt-3">
+        <thead>
+        <tr>
+          <th scope="col">Model Name</th>
+          <th scope="col">Category</th>
+          <th scope="col">Details</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="model : ${modelInfo}">
+          <td th:text="${model.name}"></td>
+          <td th:text="${model.category}"></td>
+          <td><a class="btn btn-primary" th:href="@{/models/model-details/{model-name}(model-name=${model.name})}">Detail info</a></td>
+        </tr>
+        </tbody>
+      </table>
 
-        <!-- Добавлена таблица для отображения моделей -->
-        <table class="table table-bordered mt-3">
-          <thead>
-          <tr>
-            <th scope="col">Model Name</th>
-            <th scope="col">Category</th>
-            <th scope="col">Details</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr th:each="model : ${modelInfo}">
-            <td th:text="${model.name}"></td>
-            <td th:text="${model.category}"></td>
-            <td><a class="btn btn-primary" th:href="@{/models/model-details/{model-name}(model-name=${model.name})}">Detail info</a></td>
-          </tr>
-          </tbody>
-        </table>
+      <!-- Кнопка ADD MODEL чуть ниже таблицы и с цветом -->
+      <div class="mt-3">
+        <a class="btn btn-success" href="/models/add">ADD MODEL</a>
       </div>
     </div>
+  </div>
   </div>
 </main>
 <footer th:replace="fragments/footer"/>

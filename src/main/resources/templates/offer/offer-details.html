@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/head"/>
+<head th:replace="~{fragments/head}"/>
 <body class="d-flex flex-column h-100">
-<div th:replace="fragments/navbar">Navbar</div>
+<div th:replace="~{fragments/navbar}" class="bg-dark text-white p-3">Navbar</div>
 <main class="flex-shrink-0">
   <div class="container">
     <div class="row">
       <div class="col-md-2"></div>
-      <main class="jumbotron text-center rounded col-md-12 align-self-center pt-5">
-        <div class="justify-content-center">
-          <h1>Offer Details</h1>
+      <main class="jumbotron text-center rounded col-md-12 align-self-center mt-5">
+        <div class="d-flex justify-content-center">
+          <h1 class="display-4">Offer Details</h1>
         </div>
-        <div class="row bg-light rounded">
+        <div class="row bg-light rounded mt-4">
           <div class="col-md-6 pt-3">
-            <h2>Offer</h2>
-            <h4 th:text="'Model: ' + ${offerDetails.modelName}"></h4>
-            <h4 th:text="'Price: ' + ${offerDetails.price}"></h4>
-            <h4 th:text="'Milleage: ' + ${offerDetails.mileage}"></h4>
-            <h4 th:text="'ImageURL: ' + ${offerDetails.imageURL}"></h4>
-            <h4 th:text="'Engine: ' + ${offerDetails.engineEnum}"></h4>
-            <h4 th:text="'Engine: ' + ${offerDetails.transmissionEnum}"></h4>
-            <h4 th:text="'Engine: ' + ${offerDetails.description}"></h4>
-            <div class="align-bottom"><a class="btn btn-danger align-bottom"
-                                         th:href="@{/offers/offer-delete/{offer-id}(offer-id=${offerDetails.modelName})}">Delete offer</a>
+            <h2 class="display-5">Offer</h2>
+            <h4 th:text="'Model: ' + ${offerDetails.modelName}" class="h5"></h4>
+            <h4 th:text="'Price: ' + ${offerDetails.price}" class="h5"></h4>
+            <h4 th:text="'User name: ' + ${offerDetails.un}" class="h5"></h4>
+            <h4 th:text="'Mileage: ' + ${offerDetails.mileage}" class="h5"></h4>
+            <h4 th:text="'Image URL: ' + ${offerDetails.imageURL}" class="h5"></h4>
+            <h4 th:text="'Engine: ' + ${offerDetails.engineEnum}" class="h5"></h4>
+            <h4 th:text="'Transmission: ' + ${offerDetails.transmissionEnum}" class="h5"></h4>
+            <h4 th:text="'Description: ' + ${offerDetails.description}" class="h5"></h4>
+            <div class="mt-3">
+              <a class="btn btn-danger" th:href="@{/offers/offer-delete/{offer-id}(offer-id=${offerDetails.id})}">Delete offer</a>
             </div>
           </div>
         </div>
@@ -30,6 +31,6 @@
     </div>
   </div>
 </main>
-<footer th:replace="fragments/footer"/>
+<footer th:replace="~{fragments/footer}" class="mt-auto bg-dark text-white p-3"/>
 </body>
 </html>

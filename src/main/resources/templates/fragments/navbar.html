@@ -1,31 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"/>
 <style>
+  .navbar {
+    border-bottom: 2px solid black; /*черная линия между*/
+  }
+
   .navbar-nav .nav-item {
-    margin-right: 33px; /* Уменьшено расстояние между кнопками */
+    margin-right: 33px;
   }
 
   .navbar-nav .nav-link {
     font-size: 16px; /* Размер шрифта */
   }
 </style>
-
+</head>
+<body class="d-flex flex-column h-100">
 <nav class="navbar navbar-expand-lg bg-light">
-  <div class="navbar" id="navbarNavAltMarkup">
-    <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-center">
+  <div class="container-fluid">
+    <ul class="navbar-nav">
       <li class="nav-item">
         <a class="nav-item nav-link text-dark" href="/">HOME</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-item nav-link text-dark" href="/brands/add">ADD BRAND</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-item nav-link text-dark" href="/users/add">ADD USER</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-item nav-link text-dark" href="/models/add">ADD MODEL</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-item nav-link text-dark" href="/offers/add">ADD OFFER</a>
-      </li>
+    </ul>
+  </div>
+  <div class="container-fluid" id="navbarNavAltMarkup">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-center">
       <li class="nav-item">
         <a class="nav-item nav-link text-dark" href="/brands/all">ALL BRANDS</a>
       </li>
@@ -41,3 +41,7 @@
     </ul>
   </div>
 </nav>
+<main class="flex-shrink-0">
+</main>
+</body>
+</html>
