@@ -119,7 +119,7 @@ public class OfferServiceImpl implements OfferService {
         Offer offer = modelMapper.map(offerModel, Offer.class);
         offer.setCreated(LocalDateTime.now());
         offer.setModel(modelRepository.findByName(offerModel.getModelName()).orElse(null));
-        offer.setUsers(usersRepository.findByUserName(offerModel.getUn()));
+        offer.setUsers(usersRepository.findByUserName(offerModel.getUn()).orElse(null));
         offer.setTransmissionEnum(offerModel.getTransmissionEnum());
         offer.setEngineEnum(offerModel.getEngineEnum());
         offerRepository.saveAndFlush(offer);

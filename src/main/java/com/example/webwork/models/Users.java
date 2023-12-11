@@ -17,15 +17,17 @@ public class Users extends Base {
     private String userName;
     @Column(name="password", length = 255, nullable = false)
     private String password;
-    @Column(name="firstName", length = 255, nullable = false)
+    @Column(name="firstName", length = 255)
     private String firstName;
-    @Column(name="lastName", length = 255, nullable = false)
+    @Column(name="lastName", length = 255)
     private String lastName;
+
+    private String email;
     private boolean isActive;
     @Column(name="imageURL", length = 255)
     private String imageURL;
 
-    protected Users() {};
+    public Users() {};
 
     public Role getRole() {
         return role;
@@ -85,6 +87,21 @@ public class Users extends Base {
 
     public String getImageURL() {
         return imageURL;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Users(String userName, String password, String email) {
+        this();
+
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setImageURL(String imageURL) {

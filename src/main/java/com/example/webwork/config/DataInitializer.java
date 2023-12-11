@@ -1,45 +1,58 @@
 package com.example.webwork.config;
 
-import com.example.webwork.enums.CategoryEnum;
-import com.example.webwork.enums.EngineEnum;
 import com.example.webwork.enums.RoleEnum;
-import com.example.webwork.enums.TransmissionEnum;
-import com.example.webwork.dto.*;
+import com.example.webwork.models.Role;
+import com.example.webwork.models.Users;
+import com.example.webwork.repo.RoleRepository;
+import com.example.webwork.repo.UsersRepository;
 import com.example.webwork.services.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
     private final RoleService roleService;
+    private final RoleRepository roleRepository;
+
     private final BrandService brandService;
     private final ModelService modelService;
     private final UsersService usersService;
+    private final PasswordEncoder passwordEncoder;
+    private final UsersRepository usersRepository;
     private final OfferService offerService;
-    public DataInitializer(RoleService roleService, BrandService brandService, ModelService modelService,
-                           UsersService usersService, OfferService offerService) {
+    private final String defaultPassword;
+    public DataInitializer(RoleService roleService, RoleRepository roleRepository, PasswordEncoder passwordEncoder, @Value("topsecret") String defaultPassword, BrandService brandService, ModelService modelService,
+                           UsersService usersService, UsersRepository usersRepository, OfferService offerService) {
         this.roleService = roleService;
+        this.roleRepository = roleRepository;
         this.brandService = brandService;
+        this.passwordEncoder = passwordEncoder;
         this.modelService = modelService;
         this.usersService = usersService;
+        this.usersRepository = usersRepository;
         this.offerService = offerService;
+        this.defaultPassword = defaultPassword;
     }
 
     @Override
     public void run(String... args){
-        seedData();
+        initRoles();
+        initUsers();
     }
 
     private void seedData() {
-        RoleDTO role1 = new RoleDTO(null, RoleEnum.Admin);
+
+
+        /*RoleDTO role1 = new RoleDTO(null, RoleEnum.Admin);
         RoleDTO role2 = new RoleDTO(null, RoleEnum.User);
         role1 = roleService.registerRole(role1);
-        role2 = roleService.registerRole(role2);
+        role2 = roleService.registerRole(role2);*/
 
-        LocalDateTime created1 = LocalDateTime.now();
+       /* LocalDateTime created1 = LocalDateTime.now();
         LocalDateTime created2 = LocalDateTime.of(1909, 12, 19, 1, 13, 16);
         LocalDateTime modified1 = LocalDateTime.of(1923, 1, 1, 3, 14, 17);
         LocalDateTime modified2 = LocalDateTime.of(1022, 2, 11, 8, 15, 18);
@@ -69,6 +82,38 @@ public class DataInitializer implements CommandLineRunner {
 
 
         offerService.registerOffer(offer1);
-        offerService.registerOffer(offer2);
+        offerService.registerOffer(offer2);*/
     }
+    private void initRoles() {
+        if (roleRepository.count() == 0) {
+            var adminRole = new Role(RoleEnum.Admin);
+            var normalUserRole = new Role(RoleEnum.User);
+
+            roleRepository.save(adminRole);
+            roleRepository.save(normalUserRole);
+        }
+    }
+    private void initAdmin(){
+        var adminRole = roleRepository.findByRoleEnum(RoleEnum.Admin).orElseThrow();
+
+        var adminUser = new Users("admin", passwordEncoder.encode(defaultPassword), "admin@example.com");
+        adminUser.setRole(adminRole);
+
+        usersRepository.save(adminUser);
+    }
+    private void initNormalUser(){
+        var userRole = roleRepository.findByRoleEnum(RoleEnum.User).orElseThrow();
+
+        var normalUser = new Users("user", passwordEncoder.encode(defaultPassword), "user@example.com");
+        normalUser.setRole(userRole);
+
+        usersRepository.save(normalUser);
+    }
+    private void initUsers() {
+        if (usersRepository.count() == 0) {
+            initAdmin();
+            initNormalUser();
+        }
+    }
+
 }

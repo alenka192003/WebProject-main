@@ -22,6 +22,7 @@ public class UsersDTO {
     @NotEmpty
     @Length(min = 2, message = "Фамилия должна быть больше 2 символов!")
     private String lastName;
+    private String email;
     private boolean isActive;
     private String imageURL;
     private LocalDateTime created;
@@ -41,6 +42,14 @@ public class UsersDTO {
         this.imageURL = imageURL;
         this.created = created;
         this.modified = modified;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getId() {

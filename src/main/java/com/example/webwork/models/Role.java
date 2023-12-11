@@ -18,7 +18,11 @@ public class Role extends Base {
     @Column(name="name", length = 11, nullable = false)
     private RoleEnum roleEnum;
 
-    protected Role() {};
+    public Role() {};
+
+    public Role(RoleEnum roleEnum) {
+        this.roleEnum = roleEnum;
+    }
 
     public List<Users> getUsers() {
         return users;

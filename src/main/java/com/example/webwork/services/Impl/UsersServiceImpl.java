@@ -86,7 +86,7 @@ public class UsersServiceImpl implements UsersService {
         /*userModel.setCreated(LocalDateTime.now());
         userModel.setModified(LocalDateTime.now());*/
         Users users = modelMapper.map(userModel, Users.class);
-        users.setRole(roleRepository.findByRoleEnum(userModel.getRole()));
+        users.setRole(roleRepository.findByRoleEnum(userModel.getRole()).orElse(null));
         users.setCreated(LocalDateTime.now());
         users.setModified(LocalDateTime.now());
         userRepository.saveAndFlush(users);
@@ -97,6 +97,13 @@ public class UsersServiceImpl implements UsersService {
                 .collect(Collectors.toList());
     }
 
+    public Users getUser(String userName) {
+        System.out.println(userName);
+        return userRepository.findByUserName(userName)
+                .orElseThrow(() -> new UsersNotFoundException(userName + " was not found!"));
+    }
+
+
     @Override
     public ShowInfoUsers userDetails(String userName) {
         return modelMapper.map(userRepository.findByUserName(userName), ShowInfoUsers.class);
@@ -104,7 +111,7 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public List<ShowInfoOffer> getOffersByUserName(String userName) {
-        Users user = userRepository.findByUserName(userName);
+        Users user = userRepository.findByUserName(userName).orElse(null);
 
         List<Offer> offers = offerRepository.findByUsersId(user.getId());
         return offers.stream()
@@ -117,12 +124,12 @@ public class UsersServiceImpl implements UsersService {
     }
 
     public Users getUserDetails(String userName) {
-        return userRepository.findByUserName(userName);
+        return userRepository.findByUserName(userName).orElse(null);
     }
 
     @Override
     public void updateUser(String userName, UpdateUserDto updateUserDto) {
-        Users existingUser = userRepository.findByUserName(userName);
+        Users existingUser = userRepository.findByUserName(userName).orElse(null);
         if (existingUser == null) {
             throw new UsersNotFoundException(userName);
         }

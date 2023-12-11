@@ -24,6 +24,7 @@ public class AddUserDto {
     }
 
     private String password;
+    private String email;
     @NotEmpty(message = "password must not be null or empty!")
     @Size(min = 10, message = "password must be at least 1 characters!")
     public String getPassword() {
@@ -63,6 +64,14 @@ public class AddUserDto {
 
     public void setRole(RoleEnum role) {
         this.role = role;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override

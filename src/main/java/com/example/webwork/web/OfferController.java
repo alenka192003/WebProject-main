@@ -86,12 +86,4 @@ public class OfferController {
 
         return "redirect:/offers/all";
     }
-
-    /*@GetMapping("/offer-details/{offer-userName}")
-    public String offerDetails(@PathVariable("offer-userName") String userName, Model model) {
-        model.addAttribute("offerDetails", offerService.offerDetails(userName));
-
-        return "offer/offer-details";
-    }
-*/
 }
