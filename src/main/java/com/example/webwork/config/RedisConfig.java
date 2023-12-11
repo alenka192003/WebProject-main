@@ -1,4 +1,3 @@
-/*
 package com.example.webwork.config;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -35,6 +34,8 @@ public class RedisConfig {
         return RedisCacheManager.builder(redisConnectionFactory())
                 .cacheDefaults(cacheConfig)
                 .withCacheConfiguration("users", myDefaultCacheConfig(Duration.ofMinutes(10)))
+                .withCacheConfiguration("models", myDefaultCacheConfig(Duration.ofMinutes(10)))
+
                 .build();
     }
 
@@ -45,4 +46,3 @@ public class RedisConfig {
                 .serializeValuesWith(SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
     }
 }
-*/

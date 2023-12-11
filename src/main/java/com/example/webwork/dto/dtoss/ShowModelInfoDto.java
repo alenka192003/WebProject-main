@@ -11,26 +11,6 @@ public class ShowModelInfoDto {
     private int startYear;
     private int endYear;
 
-    public LocalDateTime created;
-
-    private LocalDateTime modified;
-
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
-    }
-
-    public LocalDateTime getModified() {
-        return modified;
-    }
-
-    public void setModified(LocalDateTime modified) {
-        this.modified = modified;
-    }
-
     public String getName() {
         return name;
     }

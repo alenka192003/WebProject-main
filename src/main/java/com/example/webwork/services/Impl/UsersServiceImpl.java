@@ -17,7 +17,12 @@ import com.example.webwork.util.ValidationUtil;
 import jakarta.validation.ConstraintViolation;
 import org.modelmapper.ModelMapper;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -27,8 +32,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@EnableCaching
 public class UsersServiceImpl implements UsersService {
     private final ModelMapper modelMapper;
+    private static final Logger logger = LoggerFactory.getLogger(UsersServiceImpl.class);
+
     private RoleRepository roleRepository;
     private UsersRepository userRepository;
     private OfferRepository offerRepository;
@@ -80,7 +88,7 @@ public class UsersServiceImpl implements UsersService {
     public void setUsersRepository(UsersRepository userRepository) {
         this.userRepository = userRepository;
     }
-
+    @CacheEvict(cacheNames = "users", allEntries = true)
     public void addUser(AddUserDto userModel) {
         System.out.println(userModel);
         /*userModel.setCreated(LocalDateTime.now());
@@ -91,7 +99,7 @@ public class UsersServiceImpl implements UsersService {
         users.setModified(LocalDateTime.now());
         userRepository.saveAndFlush(users);
     }
-
+    @Cacheable("users")
     public List<ShowInfoUsers> allUsers() {
         return userRepository.findAll().stream().map(users -> modelMapper.map(users, ShowInfoUsers.class))
                 .collect(Collectors.toList());
@@ -126,9 +134,10 @@ public class UsersServiceImpl implements UsersService {
     public Users getUserDetails(String userName) {
         return userRepository.findByUserName(userName).orElse(null);
     }
-
+    @CacheEvict(value = "users", key = "#userName")
     @Override
     public void updateUser(String userName, UpdateUserDto updateUserDto) {
+        logger.info("Updating user: {}", userName);
         Users existingUser = userRepository.findByUserName(userName).orElse(null);
         if (existingUser == null) {
             throw new UsersNotFoundException(userName);
@@ -142,6 +151,7 @@ public class UsersServiceImpl implements UsersService {
 
         // Save the updated user
         userRepository.save(existingUser);
+        logger.info("User {} updated successfully", userName);
     }
 
 }

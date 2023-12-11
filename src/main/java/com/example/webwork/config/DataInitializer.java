@@ -1,5 +1,10 @@
 package com.example.webwork.config;
 
+import com.example.webwork.dto.BrandDTO;
+import com.example.webwork.dto.ModelDTO;
+import com.example.webwork.dto.RoleDTO;
+import com.example.webwork.dto.UsersDTO;
+import com.example.webwork.enums.CategoryEnum;
 import com.example.webwork.enums.RoleEnum;
 import com.example.webwork.models.Role;
 import com.example.webwork.models.Users;
@@ -11,6 +16,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
@@ -45,14 +52,14 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     private void seedData() {
+/*
 
-
-        /*RoleDTO role1 = new RoleDTO(null, RoleEnum.Admin);
+        RoleDTO role1 = new RoleDTO(null, RoleEnum.Admin);
         RoleDTO role2 = new RoleDTO(null, RoleEnum.User);
         role1 = roleService.registerRole(role1);
-        role2 = roleService.registerRole(role2);*/
+        role2 = roleService.registerRole(role2);
 
-       /* LocalDateTime created1 = LocalDateTime.now();
+        LocalDateTime created1 = LocalDateTime.now();
         LocalDateTime created2 = LocalDateTime.of(1909, 12, 19, 1, 13, 16);
         LocalDateTime modified1 = LocalDateTime.of(1923, 1, 1, 3, 14, 17);
         LocalDateTime modified2 = LocalDateTime.of(1022, 2, 11, 8, 15, 18);

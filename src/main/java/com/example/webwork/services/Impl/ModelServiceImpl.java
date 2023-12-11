@@ -12,6 +12,9 @@ import com.example.webwork.util.ValidationUtil;
 import jakarta.validation.ConstraintViolation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,6 +24,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@EnableCaching
 public class ModelServiceImpl implements ModelService {
 
     private final ModelMapper modelMapper;
@@ -105,7 +109,7 @@ public class ModelServiceImpl implements ModelService {
         this.modelRepository = modelRepository;
     }
 
-
+    @Cacheable("models")
     public List<ShowModelInfoDto> allModels() {
         return modelRepository.findAll().stream().map(model -> modelMapper.map(model, ShowModelInfoDto.class))
                 .collect(Collectors.toList());
@@ -118,6 +122,7 @@ public class ModelServiceImpl implements ModelService {
     public void removeModel(String modelName) {
         modelRepository.deleteByName(modelName);
     }
+    @CacheEvict(cacheNames = "models", allEntries = true)
     public void addModel(AddModelDto modelModel) {
         modelModel.setCreated(LocalDateTime.now());
         modelModel.setModified(LocalDateTime.now());

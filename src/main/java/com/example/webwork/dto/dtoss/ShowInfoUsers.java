@@ -14,8 +14,7 @@ public class ShowInfoUsers {
     private String password;
     private String firstName;
     private String lastName;
-    private LocalDateTime created;
-    private LocalDateTime modified;
+
 
     public RoleDTO getRole() {
         return role;
@@ -57,20 +56,4 @@ public class ShowInfoUsers {
         this.lastName = lastName;
     }
 
-
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
-    }
-
-    public LocalDateTime getModified() {
-        return modified;
-    }
-
-    public void setModified(LocalDateTime modified) {
-        this.modified = modified;
-    }
 }

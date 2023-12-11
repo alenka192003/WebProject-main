@@ -18,8 +18,6 @@
             <h4 th:text="'Category: ' + ${modelDetails.category}" class="h5"></h4>
             <h4 th:text="'Start year: ' + ${modelDetails.startYear}" class="h5"></h4>
             <h4 th:text="'End year: ' + ${modelDetails.endYear}" class="h5"></h4>
-            <h4 th:text="'Created: ' + ${modelDetails.created}" class="h5"></h4>
-            <h4 th:text="'Modified: ' + ${modelDetails.modified}" class="h5"></h4>
             <div class="mt-3"><a class="btn btn-danger" th:href="@{/models/model-delete/{model-name}(model-name=${modelDetails.name})}">Delete model</a></div>
           </div>
         </div>

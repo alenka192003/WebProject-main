@@ -15,8 +15,6 @@
           <div class="col-md-6 pt-3">
             <h2 class="display-5">Brand</h2>
             <h4 th:text="'Name: ' + ${brandDetails.name}" class="h5"></h4>
-            <h4 th:text="'Created: ' + ${brandDetails.created}" class="h5"></h4>
-            <h4 th:text="'Modified: ' + ${brandDetails.modified}" class="h5"></h4>
             <div class="mt-3">
               <a class="btn btn-danger" th:href="@{/brands/brand-delete/{brand-name}(brand-name=${brandDetails.name})}">Delete brand</a>
               <a class="btn btn-info ml-2" th:href="@{/brands/update/{brandName}(brandName=${brandDetails.name})}">Update brand</a>
@@ -32,8 +30,6 @@
                 <th>Model Name</th>
                 <th>Category</th>
                 <th>Start year</th>
-                <th>Created</th>
-                <th>Modified</th>
                 <!-- Добавьте другие необходимые заголовки столбцов -->
               </tr>
               </thead>
@@ -42,8 +38,6 @@
                 <td th:text="${model.name}"></td>
                 <td th:text="${model.category}"></td>
                 <td th:text="${model.startYear}"></td>
-                <td th:text="${model.created}"></td>
-                <td th:text="${model.modified}"></td>
                 <!-- Добавьте другие необходимые ячейки данных -->
               </tr>
               </tbody>
