@@ -6,6 +6,9 @@ import com.example.webwork.except.ModelNotFoundException;
 import com.example.webwork.services.BrandService;
 import com.example.webwork.services.ModelService;
 import jakarta.validation.Valid;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -13,9 +16,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/models")
 public class ModelController {
+    private static final Logger LOG = LogManager.getLogger(Controller.class);
     private final ModelService modelService;
     private final BrandService brandService;
     public ModelController(ModelService modelService, BrandService brandService) {
@@ -72,7 +78,8 @@ public class ModelController {
     }
 
     @GetMapping("/all")
-    public String showAllModel(Model model) {
+    public String showAllModel(Principal principal,Model model) {
+        LOG.log(Level.INFO,"Show all models for "+ principal.getName());
         model.addAttribute("modelInfo", modelService.allModels());
 
         return "model/model-all";

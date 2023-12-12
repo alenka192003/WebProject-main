@@ -8,18 +8,23 @@ import com.example.webwork.models.Brand;
 import com.example.webwork.repo.BrandRepository;
 import com.example.webwork.services.BrandService;
 import jakarta.validation.Valid;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
 @Controller
 @RequestMapping("/brands")
 public class BrandController {
+    private static final Logger LOG = LogManager.getLogger(Controller.class);
     private final BrandService brandService;
     private final BrandRepository brandRepository;
     public BrandController(BrandService brandService, BrandRepository brandRepository) {
@@ -28,7 +33,8 @@ public class BrandController {
     }
 
     @GetMapping("/all")
-    public String showAllBrands(Model model) {
+    public String showAllBrands(Principal principal,Model model) {
+        LOG.log(Level.INFO,"Show all brands for "+ principal.getName());
         model.addAttribute("brandInfo", brandService.allBrands());
 
         return "/brand/brand-all";

@@ -7,15 +7,21 @@ import com.example.webwork.services.ModelService;
 import com.example.webwork.services.OfferService;
 import com.example.webwork.services.UsersService;
 import jakarta.validation.Valid;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/offers")
 public class OfferController {
+    private static final Logger LOG = LogManager.getLogger(Controller.class);
     private final OfferService offerService;
     private final ModelService modelService;
     private final UsersService usersService;
@@ -68,7 +74,8 @@ public class OfferController {
     }
 
     @GetMapping("/all")
-    public String showAllOffers(Model model) {
+    public String showAllOffers(Principal principal,Model model) {
+        LOG.log(Level.INFO,"Show all offers for "+ principal.getName());
         model.addAttribute("offerInfo", offerService.allOffers());
 
         return "offer/offer-all";

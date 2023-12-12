@@ -9,6 +9,7 @@ import com.example.webwork.services.Impl.AuthService;
 import com.example.webwork.services.UsersService;
 import com.example.webwork.view.UserProfileView;
 import jakarta.validation.Valid;
+import org.apache.logging.log4j.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
@@ -20,10 +21,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @Controller
 @RequestMapping("/users")
 public class UserController {
+    private static final Logger LOG = LogManager.getLogger(Controller.class);
     private final UsersService userService;
     private AuthService authService;
 
@@ -34,11 +38,6 @@ public class UserController {
         this.authService = authService;
     }
 
-    @GetMapping()
-    Iterable<UsersDTO> getAllUsers() {return userService.getAll();}
-
-    @GetMapping("/{id}")
-    UsersDTO get(@PathVariable String id) {return userService.findById(id).orElseThrow(() -> new UsersNotFoundException(id));}
 
     @ModelAttribute("userModel")
     public AddUserDto initUser() {
@@ -64,7 +63,8 @@ public class UserController {
 
 
     @GetMapping("/all")
-    public String showAllUsers(Model model) {
+    public String showAllUsers(Principal principal, Model model) {
+        LOG.log(Level.INFO,"Show all users for "+ principal.getName());
         model.addAttribute("usersInfo", userService.allUsers());
 
         return "user/user-all";
