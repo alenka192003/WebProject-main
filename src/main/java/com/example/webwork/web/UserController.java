@@ -165,6 +165,8 @@ public class UserController {
     @GetMapping("/offer-add-u")
     public String showOfferAddPage(@RequestParam String modelName, @RequestParam String buyer, Model model) {
         OfferAddDTO offerAddDTO = new OfferAddDTO();
+        offerAddDTO.setUn(buyer);
+        offerAddDTO.setModelName(modelName);
         model.addAttribute("offerAddDTO", offerAddDTO);
         return "user/offer-add-u";
     }

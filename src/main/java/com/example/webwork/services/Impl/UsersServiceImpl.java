@@ -155,6 +155,7 @@ public class UsersServiceImpl implements UsersService {
         offer.setDescription(offerAddDTO.getDescription());
         offerRepository.save(offer);
     }
+    //доразобраться с оформить заказ не видит при сохранении id user+model
 
 }
 
