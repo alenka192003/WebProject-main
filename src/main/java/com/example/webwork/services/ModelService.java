@@ -19,6 +19,7 @@ public interface ModelService {
     void expel(String id);
     ModelDTO update(ModelDTO model);
     List<ModelDTO> findAllByName(String name);
+    List<ModelDTO> getAllModelsSortedByYear();
     List<ShowModelInfoDto> allModels();
     void addModel(AddModelDto modelModel);
 

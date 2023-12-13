@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BrandService {
-    BrandDTO registerBrand(BrandDTO brand);
     ShowDetailedBrandInfoDto brandDetails(String brandName);
     List<BrandDTO> getAll();
     List<ShowModelInfoDto> getModelsByBrand(String brandName);
@@ -17,7 +16,6 @@ public interface BrandService {
     void expel(String id);
 
     List<ShowDetailedBrandInfoDto> allBrands();
-
     void removeBrand(String brandName);
     void updateBrand(String name, UpdateBrandDto updateBrandDto);
 }

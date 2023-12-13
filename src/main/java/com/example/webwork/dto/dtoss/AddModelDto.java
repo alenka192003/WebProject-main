@@ -11,12 +11,13 @@ import java.time.LocalDateTime;
 public class AddModelDto {
     private String name;
     private String brandName;
-
     private CategoryEnum category;
     private int startYear;
-    private int endYear;
     private LocalDateTime created;
     private LocalDateTime modified;
+
+    private int endYear;
+
 
     @NotEmpty(message = "Model name must not be null or empty!")
     @Size(min = 2, message = "Model name must be between 2 and 10 characters!")
@@ -52,19 +53,6 @@ public class AddModelDto {
         this.endYear = endYear;
     }
 
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
-    }
-
-    public LocalDateTime getModified() {
-        return modified;
-    }
-
-
     public String getBrandName() {
         return brandName;
     }
@@ -73,10 +61,20 @@ public class AddModelDto {
         this.brandName = brandName;
     }
 
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
     public void setModified(LocalDateTime modified) {
         this.modified = modified;
     }
 
+    public LocalDateTime getCreated() {
+        return created;
+    }
 
-    //кастомный view
+    public LocalDateTime getModified() {
+        return modified;
+    }
 }

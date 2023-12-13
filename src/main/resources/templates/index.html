@@ -1,17 +1,62 @@
 <!DOCTYPE html>
-<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head}"/>
+<style>
+  /* Добавленные стили оставляем здесь */
+</style>
+</head>
 <body class="d-flex flex-column h-100">
 <div th:replace="~{fragments/navbar}">Navbar</div>
 <main class="flex-shrink-0">
   <div class="container">
-    <div class="row">
-      <div class="col-md-2"></div>
-      <div class="jumbotron text-center rounded col-md-8 align-self-center pt-5">
-        <div class="d-flex flex-column align-items-center justify-content-center">
-          <h1 class="display-4">Welcome to my Application!</h1>
-          <p class="lead">Last update of Database: <span th:text="${#dates.createNow()}"></span></p>
+    <!-- Новый раздел для вывода самого продаваемого бренда -->
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <h2>Best Selling Brand</h2>
+        <div class="card mb-3">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <!-- Здесь вы можете использовать изображение бренда, например: -->
+              <!-- <img src="path/to/brand/image.jpg" alt="Brand Image" class="img-fluid"> -->
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <!-- Обертывание названия бренда в гиперссылку -->
+                <h5 class="card-title" th:if="${bestSellingBrand != null}">
+                  <a th:href="@{'/brands/brand-details/' + ${bestSellingBrand.name}}" th:text="${bestSellingBrand.name}"></a>
+                </h5>
+                <p class="card-text" th:if="${bestSellingBrand != null}" th:text="${bestSellingBrand.description}" style="font-size: 18px;"></p>
+                <p th:if="${bestSellingBrand == null}">No data available</p>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Раздел с последними моделями оставляем без изменений -->
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <h2>Latest Models</h2>
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Start year</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="model : ${latestModels}">
+            <!-- Обертывание имени модели в гиперссылку -->
+            <td>
+              <a th:href="@{'models/model-details/' + ${model.name}}" th:text="${model.name}"></a>
+            </td>
+            <td th:text="${model.categoryEnum}"></td>
+            <td th:text="${model.startYear}"></td>
+          </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

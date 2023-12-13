@@ -34,7 +34,7 @@ public class Offer extends Base {
     @Column(name="year", length = 11, nullable = false)
     private int year;
 
-    protected Offer() {};
+    public Offer() {};
 
     public Model getModel() {
         return model;

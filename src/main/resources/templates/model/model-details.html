@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="fragments/head"/>
 <body class="d-flex flex-column h-100">
 <div th:replace="fragments/navbar" class="bg-dark text-white p-3">Navbar</div>
@@ -18,7 +18,13 @@
             <h4 th:text="'Category: ' + ${modelDetails.category}" class="h5"></h4>
             <h4 th:text="'Start year: ' + ${modelDetails.startYear}" class="h5"></h4>
             <h4 th:text="'End year: ' + ${modelDetails.endYear}" class="h5"></h4>
-            <div class="mt-3"><a class="btn btn-danger" th:href="@{/models/model-delete/{model-name}(model-name=${modelDetails.name})}">Delete model</a></div>
+            <div class="mt-3">
+              <li class="nav-item" sec:authorize="hasRole('Admin')">
+              <a class="btn btn-danger" th:href="@{/models/model-delete/{model-name}(model-name=${modelDetails.name})}">Delete model</a></div>
+            <!--<td>
+              &lt;!&ndash; Добавленная кнопка "Купить" с проверкой роли &ndash;&gt;
+              <a th:if="${#authorization.expression('hasRole(''User'')')}" class="btn btn-success" th:href="@{'/users/offer-add-u?modelName=' + ${modelDetails.name} + '&buyer=' + ${#authentication.principal.username}}">Купить</a>
+            </td>-->
           </div>
         </div>
       </main>

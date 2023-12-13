@@ -13,21 +13,19 @@
                     <h2 class="card-title text-center mb-4">Update Brand</h2>
 
                     <!-- Thymeleaf form with Spring model attribute -->
-                    <form th:object="${updateBrandForm}" th:action="@{/brands/update/{brand-name}(brand-name=${brand.get().name})}" method="post">
+                    <form th:object="${updateBrandForm}" th:action="@{'/brands/update/'+ ${brand.name}}" method="post">
                         <!-- Thymeleaf hidden field for brand name -->
-                        <input type="hidden" id="name" th:field="*{name}" th:value="${brand.get().name}"/>
-
-                        <!-- fields -->
                         <div class="form-group">
-                            <label for="brandName">Brand Name:</label>
-                            <div class="input-group">
-                                <input type="text" id="brandName" name="brandName" th:field="*{name}"
-                                       class="form-control" placeholder="New Brand Name"/>
-                                <div>
-                                    <button type="submit" class="btn btn-primary btn-block">Update</button>
-                                </div>
-                            </div>
+                            <label for="name">Brand Name:</label>
+                            <input type="text" id="name" name="name" th:field="*{name}"
+                                   class="form-control" placeholder="New Brand Name"/>
                         </div>
+                        <div class="form-group">
+                            <label for="name">Brand Description:</label>
+                            <input type="text" id="lastName" name="description" th:field="*{description}"
+                                   class="form-control" placeholder="New Last Name"/>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Update</button>
                     </form>
                 </div>
             </div>

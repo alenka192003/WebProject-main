@@ -29,6 +29,7 @@ public class Users extends Base {
 
     public Users() {};
 
+
     public Role getRole() {
         return role;
     }
@@ -95,7 +96,7 @@ public class Users extends Base {
 
     public Users(String userName, String password, String email) {
         this();
-
+        this.firstName=firstName;
         this.userName = userName;
         this.password = password;
         this.email = email;
@@ -106,5 +107,20 @@ public class Users extends Base {
 
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
+    }
+
+    @Override
+    public String toString() {
+        return "Users{" +
+                "role=" + role +
+                ", offers=" + offers +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", isActive=" + isActive +
+                ", imageURL='" + imageURL + '\'' +
+                '}';
     }
 }

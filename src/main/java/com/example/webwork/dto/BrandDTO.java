@@ -11,17 +11,19 @@ public class BrandDTO {
     @NotEmpty
     @Length(min = 2, message = "Имя должно быть больше 2 символов!")
     private String name;
+    private String description;
     private LocalDateTime created;
     private LocalDateTime modified;
 
-    public BrandDTO(String id, String name, LocalDateTime created, LocalDateTime modified) {
+    public BrandDTO(String id, String name, String description,LocalDateTime created, LocalDateTime modified) {
         this.id = id;
         this.name = name;
+        this.description=description;
         this.created = created;
         this.modified = modified;
     }
 
-    protected BrandDTO() {};
+    public BrandDTO() {};
 
     public String getId() {
         return id;
@@ -53,6 +55,14 @@ public class BrandDTO {
 
     public void setModified(LocalDateTime modified) {
         this.modified = modified;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override

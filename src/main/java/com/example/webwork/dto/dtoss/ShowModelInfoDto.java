@@ -10,6 +10,7 @@ public class ShowModelInfoDto {
     private CategoryEnum category;
     private int startYear;
     private int endYear;
+    private String imageURL;
 
     public String getName() {
         return name;
@@ -41,5 +42,13 @@ public class ShowModelInfoDto {
 
     public void setEndYear(int endYear) {
         this.endYear = endYear;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 }

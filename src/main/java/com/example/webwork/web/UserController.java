@@ -1,16 +1,15 @@
 package com.example.webwork.web;
 
-import com.example.webwork.dto.UsersDTO;
 import com.example.webwork.dto.dtoss.*;
-import com.example.webwork.except.UsersNotFoundException;
 import com.example.webwork.models.Users;
 import com.example.webwork.repo.UsersRepository;
 import com.example.webwork.services.Impl.AuthService;
+import com.example.webwork.services.OfferService;
 import com.example.webwork.services.UsersService;
 import com.example.webwork.view.UserProfileView;
 import jakarta.validation.Valid;
 import org.apache.logging.log4j.Level;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,7 +31,8 @@ public class UserController {
     private AuthService authService;
 
     private final UsersRepository usersRepository;
-    public UserController(UsersService userService, UsersRepository usersRepository,AuthService authService) {
+
+    public UserController(UsersService userService, UsersRepository usersRepository, AuthService authService) {
         this.userService = userService;
         this.usersRepository = usersRepository;
         this.authService = authService;
@@ -43,6 +43,7 @@ public class UserController {
     public AddUserDto initUser() {
         return new AddUserDto();
     }
+
     @GetMapping("/add")
     public String addUser() {
         return "/user/user-add";
@@ -64,11 +65,12 @@ public class UserController {
 
     @GetMapping("/all")
     public String showAllUsers(Principal principal, Model model) {
-        LOG.log(Level.INFO,"Show all users for "+ principal.getName());
+        LOG.log(Level.INFO, "Show all users for " + principal.getName());
         model.addAttribute("usersInfo", userService.allUsers());
 
         return "user/user-all";
     }
+
     @GetMapping("/user-details/{user-userName}")
     public String userDetails(@PathVariable("user-userName") String userName, Model model) {
         model.addAttribute("userDetails", userService.userDetails(userName));
@@ -83,6 +85,7 @@ public class UserController {
 
         return "redirect:/users/all";
     }
+
     @GetMapping("/update/{user-userName}")
     public String updateUserForm(@PathVariable("user-userName") String userName, Model model) {
         Users user = usersRepository.findByUserName(userName).orElse(null);
@@ -95,15 +98,14 @@ public class UserController {
     public String updateUser(@PathVariable("user-userName") String userName, @Valid UpdateUserDto updateUserDto,
                              BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-                    redirectAttributes.addFlashAttribute("updateUserModel", updateUserDto);
+            redirectAttributes.addFlashAttribute("updateUserModel", updateUserDto);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.updateUserModel",
                     bindingResult);
             return "redirect:/users/update/" + userName;
         }
         userService.updateUser(userName, updateUserDto);
         return "redirect:/users/all";
-}
-
+    }
 
 
     @GetMapping("/register")
@@ -124,7 +126,7 @@ public class UserController {
     @PostMapping("/register")
     public String createUser(@Valid UserRegistrationDto userRegistrationDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("userRegistrationDto", userRegistrationDto);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userRegistrationDto", bindingResult);
             return "redirect:/users/register";
@@ -160,6 +162,28 @@ public class UserController {
         return "profile";
     }
 
+    @GetMapping("/offer-add-u")
+    public String showOfferAddPage(@RequestParam String modelName, @RequestParam String buyer, Model model) {
+        OfferAddDTO offerAddDTO = new OfferAddDTO();
+        model.addAttribute("offerAddDTO", offerAddDTO);
+        return "user/offer-add-u";
+    }
+
+    @PostMapping("/offer-add-u")
+    public String processOfferAdd(@ModelAttribute OfferAddDTO offerAddDTO) {
+        userService.addOfferUser(offerAddDTO);
+        // Здесь вы можете перенаправить пользователя на другую страницу или вернуть его обратно
+        return "redirect:/";
+    }
+    @GetMapping("/user-details-offer")
+    public String showUserOffers(Principal principal, Model model) {
+        String username = principal.getName();
+        Users user = userService.getUser(username);
+        List<ShowInfoOffer> offers = userService.getOffersByUserName(user.getUserName());
+        LOG.info("User offers for {}: {}", principal.getName(), offers);
+        model.addAttribute("offer", offers);
+        return "user/user-offers";
+    }
 }
 
 

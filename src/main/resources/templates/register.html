@@ -24,6 +24,24 @@
                         <small th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" class="text-danger">Error
                             message</small>
                     </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="username">First name</label>
+                        <input th:field="*{firstName}"
+                               th:errorclass="is-invalid"
+                               type="text" class="form-control text-center" id="firstName" aria-describedby="firstNameHelp"
+                               name="firstName"/>
+                        <small th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="text-danger">Error
+                            message</small>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="username">Last name</label>
+                        <input th:field="*{lastName}"
+                               th:errorclass="is-invalid"
+                               type="text" class="form-control text-center" id="lastName" aria-describedby="lastNameHelp"
+                               name="lastName"/>
+                        <small th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="text-danger">Error
+                            message</small>
+                    </div>
 
 
                     <div class="mb-3">

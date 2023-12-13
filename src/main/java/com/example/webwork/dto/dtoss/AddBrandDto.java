@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 
 public class AddBrandDto {
     private String name;
+    private String description;
     private LocalDateTime created;
     private LocalDateTime modified;
 
@@ -36,5 +37,13 @@ public class AddBrandDto {
 
     public void setModified(LocalDateTime modified) {
         this.modified = modified;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

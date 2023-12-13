@@ -5,7 +5,8 @@ import jakarta.validation.constraints.*;
 public class UserRegistrationDto {
     private String userName;
     private String email;
-
+    private String firstName;
+    private String lastName;
     private String password;
     private String confirmPassword;
 
@@ -48,11 +49,29 @@ public class UserRegistrationDto {
         this.confirmPassword = confirmPassword;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     @Override
     public String toString() {
-        return "UserRegistrationDTO{" +
-                "username='" + userName + '\'' +
+        return "UserRegistrationDto{" +
+                "userName='" + userName + '\'' +
                 ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", password='" + password + '\'' +
                 ", confirmPassword='" + confirmPassword + '\'' +
                 '}';

@@ -1,5 +1,6 @@
 package com.example.webwork.services.Impl;
 
+import com.example.webwork.dto.dtoss.AddUserDto;
 import com.example.webwork.dto.dtoss.UserRegistrationDto;
 import com.example.webwork.enums.RoleEnum;
 import com.example.webwork.models.Users;
@@ -10,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +29,28 @@ public class AuthService {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
+    }
+
+    public void addUser(AddUserDto userModel) {
+        Optional<Users> byEmail = this.userRepository.findByEmail(userModel.getEmail());
+
+        if (byEmail.isPresent()) {
+            throw new RuntimeException("email.used");
+        }
+
+        var userRole = roleRepository.
+                findByRoleEnum(RoleEnum.User).orElseThrow();
+
+        Users user = new Users(
+                userModel.getUserName(),
+                passwordEncoder.encode(userModel.getPassword()),
+                userModel.getEmail()
+        );
+        user.setCreated(LocalDateTime.now());
+        user.setModified(LocalDateTime.now());
+        user.setRole(userRole);
+
+        this.userRepository.save(user);
     }
 
     public void register(UserRegistrationDto registrationDTO) {
@@ -48,7 +72,8 @@ public class AuthService {
                 passwordEncoder.encode(registrationDTO.getPassword()),
                 registrationDTO.getEmail()
         );
-
+        user.setCreated(LocalDateTime.now());
+        user.setModified(LocalDateTime.now());
         user.setRole(userRole);
 
         this.userRepository.save(user);

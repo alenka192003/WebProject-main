@@ -14,7 +14,11 @@ import com.example.webwork.services.BrandService;
 import com.example.webwork.util.ValidationUtil;
 import jakarta.validation.ConstraintViolation;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -23,11 +27,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+//@EnableCaching
 public class BrandServiceImpl implements BrandService {
 
     private final ModelMapper modelMapper;
     private  BrandRepository brandRepository;
     private ModelRepository modelRepository;
+    private static final Logger logger = LoggerFactory.getLogger(BrandServiceImpl.class);
 
     private final ValidationUtil validationUtil;
 
@@ -36,24 +42,6 @@ public class BrandServiceImpl implements BrandService {
         this.modelMapper = modelMapper;
         this.modelRepository = modelRepository;
         this.validationUtil = validationUtil;
-    }
-    @Override
-    public BrandDTO registerBrand(BrandDTO brand) {
-        if (!this.validationUtil.isValid(brand)) {
-            this.validationUtil
-                    .violations(brand)
-                    .stream()
-                    .map(ConstraintViolation::getMessage)
-                    .forEach(System.out::println);
-            throw new IllegalArgumentException("не подходит");
-        }
-        Brand b = modelMapper.map(brand, Brand.class);
-        String brandId = b.getId();
-        if (brandId == null || brandRepository.findById(brandId).isEmpty()) {
-            return modelMapper.map(brandRepository.save(b), BrandDTO.class);
-        } else {
-            throw new BrandConflictException("уже существует с таким id");
-        }
     }
 
     @Override
@@ -91,6 +79,7 @@ public class BrandServiceImpl implements BrandService {
         this.brandRepository = brandRepository;
     }
 
+    //  @Cacheable("brands")
     public List<ShowDetailedBrandInfoDto> allBrands() {
         return brandRepository.findAll().stream().map(company -> modelMapper.map(company, ShowDetailedBrandInfoDto.class))
                 .collect(Collectors.toList());
@@ -114,8 +103,10 @@ public class BrandServiceImpl implements BrandService {
     public void updateBrand(String name, UpdateBrandDto updateBrandDto) {
         brandRepository.findByName(name).ifPresent(brand -> {
             brand.setName(updateBrandDto.getName());
+            brand.setDescription(updateBrandDto.getDescription());
             brand.setModified(LocalDateTime.now());
             brandRepository.save(brand);
+            logger.info("User {} updated successfully", brand);
         });
     }
 }

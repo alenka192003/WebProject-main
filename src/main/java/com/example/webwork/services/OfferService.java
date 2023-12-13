@@ -1,5 +1,6 @@
 package com.example.webwork.services;
 
+import com.example.webwork.dto.BrandDTO;
 import com.example.webwork.dto.ModelDTO;
 import com.example.webwork.dto.OfferDTO;
 import com.example.webwork.dto.UsersDTO;
@@ -20,5 +21,6 @@ public interface OfferService {
     void removeOffer(String id);
     ShowDetailedOfferDto offerDetails(String id);
     void addOffer(AddOfferDto offerModel);
+    BrandDTO getBestSellingBrand();
 
 }

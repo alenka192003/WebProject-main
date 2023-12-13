@@ -4,30 +4,20 @@ import java.time.LocalDateTime;
 
 public class ShowDetailedBrandInfoDto {
     private String name;
-    private LocalDateTime created;
-    private LocalDateTime modified;
-
+    private String description;
     public String getName() {
         return name;
-    }
-
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    public LocalDateTime getModified() {
-        return modified;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
+    public String getDescription() {
+        return description;
     }
 
-    public void setModified(LocalDateTime modified) {
-        this.modified = modified;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

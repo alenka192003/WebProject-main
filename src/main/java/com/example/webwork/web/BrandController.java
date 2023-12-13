@@ -86,7 +86,7 @@ public class BrandController {
 
     @GetMapping("/update/{brand-name}")
     public String updateBrandForm(@PathVariable("brand-name") String name, Model model) {
-        Optional<Brand> brand = brandRepository.findByName(name);
+        Brand brand = brandRepository.findByName(name).orElse(null);
         model.addAttribute("brand", brand);
         model.addAttribute("updateBrandForm", new UpdateBrandDto());
         return "/brand/brand-update";

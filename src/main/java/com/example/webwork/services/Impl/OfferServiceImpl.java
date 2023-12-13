@@ -1,10 +1,12 @@
 package com.example.webwork.services.Impl;
 
+import com.example.webwork.dto.BrandDTO;
 import com.example.webwork.dto.ModelDTO;
 import com.example.webwork.dto.dtoss.*;
 import com.example.webwork.except.OfferConflictException;
 import com.example.webwork.except.OfferNotFoundException;
 import com.example.webwork.dto.OfferDTO;
+import com.example.webwork.models.Brand;
 import com.example.webwork.models.Model;
 import com.example.webwork.models.Offer;
 import com.example.webwork.models.Users;
@@ -16,6 +18,8 @@ import com.example.webwork.util.ValidationUtil;
 import jakarta.validation.ConstraintViolation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -105,7 +109,6 @@ public class OfferServiceImpl implements OfferService {
         this.offerRepository = offerRepository;
     }
 
-
     public List<ShowInfoOffer> allOffers() {
         return offerRepository.findAll().stream().map(offer -> modelMapper.map(offer, ShowInfoOffer.class))
                 .collect(Collectors.toList());
@@ -126,4 +129,20 @@ public class OfferServiceImpl implements OfferService {
     }
 
     public void removeOffer(String id) {offerRepository.deleteById(id);}
+
+    public BrandDTO getBestSellingBrand() {
+        List<Object[]> result = offerRepository.findBestSellingBrand();
+        if (result != null && !result.isEmpty()) {
+            Object[] brandData = result.get(0);
+            Brand brand = (Brand) brandData[0];
+
+            BrandDTO bestSellingBrand = new BrandDTO();
+            bestSellingBrand.setId(brand.getId());
+            bestSellingBrand.setName(brand.getName());
+            bestSellingBrand.setDescription(brand.getDescription());
+
+            return bestSellingBrand;
+        }
+        return null;
+    }
 }

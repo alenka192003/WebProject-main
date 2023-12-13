@@ -13,6 +13,8 @@ public class Brand extends Base {
     @Column(name="name", length = 255, nullable = false)
     private String name;
 
+    @Column(name = "description")
+    private String description;
     protected Brand() {};
 
     public List<Model> getModels() {
@@ -31,4 +33,11 @@ public class Brand extends Base {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

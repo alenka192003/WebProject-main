@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UsersService {
-    UsersDTO registerUser(UsersDTO users);
     void addUser(AddUserDto userModel);
 
     List<ShowInfoUsers> allUsers();
@@ -25,5 +24,6 @@ public interface UsersService {
     void removeUser(String userName);
     Users getUserDetails(String userName);
     Users getUser(String userName);
+    void addOfferUser(OfferAddDTO offerAddDTO);
     void updateUser(String userName, UpdateUserDto updateUserDto);
 }

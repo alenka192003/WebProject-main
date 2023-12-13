@@ -33,9 +33,11 @@ public class RedisConfig {
 
         return RedisCacheManager.builder(redisConnectionFactory())
                 .cacheDefaults(cacheConfig)
-                .withCacheConfiguration("users", myDefaultCacheConfig(Duration.ofMinutes(10)))
-                .withCacheConfiguration("models", myDefaultCacheConfig(Duration.ofMinutes(10)))
+                .withCacheConfiguration("users", myDefaultCacheConfig(Duration.ofMinutes(1)))
+                .withCacheConfiguration("models", myDefaultCacheConfig(Duration.ofMinutes(1)))
+                //.withCacheConfiguration("brands", myDefaultCacheConfig(Duration.ofMinutes(1)))
 
+//поменять на 5 10 15
                 .build();
     }
 

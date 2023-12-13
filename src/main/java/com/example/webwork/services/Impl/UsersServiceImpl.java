@@ -9,6 +9,7 @@ import com.example.webwork.models.Brand;
 import com.example.webwork.models.Model;
 import com.example.webwork.models.Offer;
 import com.example.webwork.models.Users;
+import com.example.webwork.repo.ModelRepository;
 import com.example.webwork.repo.OfferRepository;
 import com.example.webwork.repo.RoleRepository;
 import com.example.webwork.repo.UsersRepository;
@@ -16,13 +17,16 @@ import com.example.webwork.services.UsersService;
 import com.example.webwork.util.ValidationUtil;
 import jakarta.validation.ConstraintViolation;
 import org.modelmapper.ModelMapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -35,40 +39,25 @@ import java.util.stream.Collectors;
 @EnableCaching
 public class UsersServiceImpl implements UsersService {
     private final ModelMapper modelMapper;
-    private static final Logger logger = LoggerFactory.getLogger(UsersServiceImpl.class);
+    private PasswordEncoder passwordEncoder;
+
+    private static final Logger LOG = LogManager.getLogger(Service.class);
 
     private RoleRepository roleRepository;
+    private ModelRepository modelRepository;
     private UsersRepository userRepository;
     private OfferRepository offerRepository;
     private final ValidationUtil validationUtil;
+    private AuthService authService;
 
     @Autowired
-    public UsersServiceImpl(ModelMapper modelMapper, RoleRepository roleRepository, ValidationUtil validationUtil, OfferRepository offerRepository) {
+    public UsersServiceImpl(ModelMapper modelMapper, ModelRepository modelRepository,RoleRepository roleRepository, ValidationUtil validationUtil, OfferRepository offerRepository,AuthService authService) {
         this.roleRepository = roleRepository;
+        this.modelRepository=modelRepository;
         this.offerRepository = offerRepository;
         this.modelMapper = modelMapper;
         this.validationUtil = validationUtil;
-    }
-
-    @Override
-    public UsersDTO registerUser(UsersDTO users) {
-
-        if (!this.validationUtil.isValid(users)) {
-            this.validationUtil
-                    .violations(users)
-                    .stream()
-                    .map(ConstraintViolation::getMessage)
-                    .forEach(System.out::println);
-            throw new IllegalArgumentException("не подходит");
-        }
-
-        Users u = modelMapper.map(users, Users.class);
-        String userId = u.getId();
-        if (u.getId() == null || userRepository.findById(userId).isEmpty()) {
-            return modelMapper.map(userRepository.save(u), UsersDTO.class);
-        } else {
-            throw new UsersConflictException("уже существует с таким id");
-        }
+        this.authService=authService;
     }
 
     @Override
@@ -90,15 +79,11 @@ public class UsersServiceImpl implements UsersService {
     }
     @CacheEvict(cacheNames = "users", allEntries = true)
     public void addUser(AddUserDto userModel) {
-        System.out.println(userModel);
-        /*userModel.setCreated(LocalDateTime.now());
-        userModel.setModified(LocalDateTime.now());*/
-        Users users = modelMapper.map(userModel, Users.class);
-        users.setRole(roleRepository.findByRoleEnum(userModel.getRole()).orElse(null));
-        users.setCreated(LocalDateTime.now());
-        users.setModified(LocalDateTime.now());
-        userRepository.saveAndFlush(users);
+        authService.addUser(userModel);
     }
+
+
+
     @Cacheable("users")
     public List<ShowInfoUsers> allUsers() {
         return userRepository.findAll().stream().map(users -> modelMapper.map(users, ShowInfoUsers.class))
@@ -120,7 +105,6 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public List<ShowInfoOffer> getOffersByUserName(String userName) {
         Users user = userRepository.findByUserName(userName).orElse(null);
-
         List<Offer> offers = offerRepository.findByUsersId(user.getId());
         return offers.stream()
                 .map(offer -> modelMapper.map(offer, ShowInfoOffer.class))
@@ -137,7 +121,7 @@ public class UsersServiceImpl implements UsersService {
     @CacheEvict(value = "users", key = "#userName")
     @Override
     public void updateUser(String userName, UpdateUserDto updateUserDto) {
-        logger.info("Updating user: {}", userName);
+        LOG.info("Updating user: {}", userName);
         Users existingUser = userRepository.findByUserName(userName).orElse(null);
         if (existingUser == null) {
             throw new UsersNotFoundException(userName);
@@ -151,7 +135,25 @@ public class UsersServiceImpl implements UsersService {
 
         // Save the updated user
         userRepository.save(existingUser);
-        logger.info("User {} updated successfully", userName);
+        LOG.info("User {} updated successfully", userName);
+
+    }
+
+    @Override
+    public void addOfferUser(OfferAddDTO offerAddDTO) {
+        // Создаем объект Offer из DTO
+        Offer offer = new Offer();
+        offer.setEngineEnum(offerAddDTO.getEngineEnum());
+        offer.setUsers(userRepository.findByUserName(offerAddDTO.getUn()).orElse(null));
+        offer.setModel(modelRepository.findByName(offerAddDTO.getModelName()).orElse(null));
+        offer.setCreated(LocalDateTime.now());
+        offer.setTransmissionEnum(offerAddDTO.getTransmissionEnum());
+        offer.setYear(offerAddDTO.getYear());
+        offer.setPrice(offerAddDTO.getPrice());
+        offer.setMileage(offerAddDTO.getMileage());
+        offer.setImageUrl(offerAddDTO.getImageURL());
+        offer.setDescription(offerAddDTO.getDescription());
+        offerRepository.save(offer);
     }
 
 }

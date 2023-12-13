@@ -18,6 +18,7 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.IllformedLocaleException;
 import java.util.List;
 import java.util.Optional;
@@ -119,6 +120,8 @@ public class ModelServiceImpl implements ModelService {
     public ShowModelInfoDto modelDetails(String modelName) {
         return modelMapper.map(modelRepository.findByName(modelName).orElse(null), ShowModelInfoDto.class);
     }
+
+    @CacheEvict(cacheNames = "models", allEntries = true)
     public void removeModel(String modelName) {
         modelRepository.deleteByName(modelName);
     }
@@ -132,4 +135,14 @@ public class ModelServiceImpl implements ModelService {
         modelRepository.saveAndFlush(model);
     }
 
+    public List<ModelDTO> getAllModelsSortedByYear() {
+        int currentYear = java.time.Year.now().getValue();
+        List<Model> allModels = modelRepository.findAll();
+
+        List<ModelDTO> sortedModels = allModels.stream()
+                .map(model -> modelMapper.map(model, ModelDTO.class))
+                .sorted(Comparator.comparingInt(ModelDTO::getStartYear).reversed())
+                .collect(Collectors.toList());
+        return sortedModels;
+    }
 }

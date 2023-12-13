@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="fragments/navbar">Navbar</div>
+<main class="flex-shrink-0">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2>My Offers</h2>
+        <table class="table table-bordered mt-3">
+          <thead>
+          <tr>
+            <th scope="col">Model</th>
+            <th scope="col">Description</th>
+            <th scope="col">Engine</th>
+            <th scope="col">Image URL</th>
+            <th scope="col">Mileage</th>
+            <th scope="col">Price</th>
+            <th scope="col">Transmission</th>
+            <!-- Добавьте другие заголовки, если необходимо -->
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="offer : ${offer}">
+            <td><a th:href="@{'models/model-details/' + ${offer.model.name}}" th:text="${offer.model.name}"></a></td>
+            <td th:text="${offer.description}"></td>
+            <td th:text="${offer.engineEnum}"></td>
+            <td th:text="${offer.imageURL}"></td>
+            <td th:text="${offer.mileage}"></td>
+            <td th:text="${offer.price}"></td>
+            <td th:text="${offer.transmissionEnum}"></td>
+            <!-- Добавьте другие поля, если необходимо -->
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>
+<footer th:replace="fragments/footer"/>
+</body>
+</html>
