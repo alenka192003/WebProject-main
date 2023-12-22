@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface OfferService {
-    OfferDTO registerOffer(OfferDTO offer);
     List<OfferDTO> getAll();
     Optional<OfferDTO> findById(String id);
     void expel(String id);

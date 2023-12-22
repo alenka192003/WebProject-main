@@ -7,6 +7,8 @@
   <div class="container d-flex justify-content-center align-items-center h-100">
     <div class="jumbotron text-center rounded col-md-8 pt-5">
       <h2 class="text-center text-dark mt-5">All Brands</h2>
+
+      <!-- Таблица для отображения брендов -->
       <table class="table table-bordered">
         <thead>
         <tr>
@@ -17,15 +19,19 @@
         <tbody>
         <tr th:each="brand : ${brandInfo}">
           <td th:text="${brand.name}"></td>
-          <td><a class="btn btn-primary" th:href="@{/brands/brand-details/{brand-name}(brand-name=${brand.name})}">Detail info</a></td>
+          <td>
+            <a class="btn btn-primary" th:href="@{/brands/brand-details/{brand-name}(brand-name=${brand.name})}">Detail info</a>
+          </td>
         </tr>
         </tbody>
       </table>
 
       <!-- Кнопка ADD BRAND чуть ниже таблицы и с цветом -->
-      <li class="nav-item" sec:authorize="hasRole('Admin')">
-        <a class="nav-item nav-link text-dark" href="/brands/add">ADD BRAND</a>
-      </li>
+      <ul class="nav justify-content-center mt-3">
+        <li class="nav-item" sec:authorize="hasRole('Admin')">
+          <a class="btn btn-success" href="/brands/add">ADD BRAND</a>
+        </li>
+      </ul>
     </div>
   </div>
 </main>

@@ -94,8 +94,9 @@ public class Users extends Base {
         return email;
     }
 
-    public Users(String userName, String password, String email) {
+    public Users(String firstName,String lastName,String userName, String password, String email) {
         this();
+        this.lastName=lastName;
         this.firstName=firstName;
         this.userName = userName;
         this.password = password;

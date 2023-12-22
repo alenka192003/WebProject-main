@@ -2,6 +2,7 @@ package com.example.webwork.dto.dtoss;
 
 import com.example.webwork.dto.RoleDTO;
 import com.example.webwork.enums.RoleEnum;
+import com.example.webwork.except.UniqueUserName;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -11,8 +12,8 @@ import java.time.LocalDateTime;
 
 
 public class AddUserDto {
+    @UniqueUserName
     private String userName;
-
     @NotEmpty(message = "Name must not be null or empty!")
     @Size(min = 2, max = 10, message = "Name must be more 2 !")
     public String getUserName() {

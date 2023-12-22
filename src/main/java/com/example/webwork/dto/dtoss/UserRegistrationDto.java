@@ -1,8 +1,11 @@
 package com.example.webwork.dto.dtoss;
 
+//import com.example.webwork.except.UniqueUserName;
+import com.example.webwork.except.UniqueUserName;
 import jakarta.validation.constraints.*;
 
 public class UserRegistrationDto {
+    @UniqueUserName
     private String userName;
     private String email;
     private String firstName;

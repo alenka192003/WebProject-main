@@ -17,12 +17,8 @@ import java.util.Optional;
 
 @Service
 public class AuthService {
-
     private UsersRepository userRepository;
-
     private RoleRepository roleRepository;
-
-
     private PasswordEncoder passwordEncoder;
 
     public AuthService(UsersRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
@@ -43,6 +39,8 @@ public class AuthService {
 
         Users user = new Users(
                 userModel.getUserName(),
+                userModel.getLastName(),
+                userModel.getFirstName(),
                 passwordEncoder.encode(userModel.getPassword()),
                 userModel.getEmail()
         );
@@ -57,18 +55,17 @@ public class AuthService {
         if (!registrationDTO.getPassword().equals(registrationDTO.getConfirmPassword())) {
             throw new RuntimeException("passwords.match");
         }
-
         Optional<Users> byEmail = this.userRepository.findByEmail(registrationDTO.getEmail());
-
         if (byEmail.isPresent()) {
             throw new RuntimeException("email.used");
         }
-
         var userRole = roleRepository.
                 findByRoleEnum(RoleEnum.User).orElseThrow();
 
         Users user = new Users(
                 registrationDTO.getUserName(),
+                registrationDTO.getFirstName(),
+                registrationDTO.getLastName(),
                 passwordEncoder.encode(registrationDTO.getPassword()),
                 registrationDTO.getEmail()
         );

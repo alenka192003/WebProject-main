@@ -15,11 +15,9 @@ import java.util.stream.Collectors;
 
 public class AppUserDetailsService implements UserDetailsService {
     private UsersRepository userRepository;
-
     public AppUserDetailsService(UsersRepository userRepository) {
         this.userRepository = userRepository;
     }
-
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         return userRepository.findByUserName(userName)
@@ -27,7 +25,6 @@ public class AppUserDetailsService implements UserDetailsService {
                     List<GrantedAuthority> authorities = Collections.singletonList(
                             new SimpleGrantedAuthority("ROLE_" + u.getRole().getRoleEnum().name())
                     );
-
                     return new User(
                             u.getUserName(),
                             u.getPassword(),
@@ -36,7 +33,6 @@ public class AppUserDetailsService implements UserDetailsService {
                 })
                 .orElseThrow(() -> new UsernameNotFoundException(userName + " was not found!"));
     }
-
 }
 
 

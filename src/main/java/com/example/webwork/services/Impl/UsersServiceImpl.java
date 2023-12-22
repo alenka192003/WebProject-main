@@ -127,13 +127,10 @@ public class UsersServiceImpl implements UsersService {
             throw new UsersNotFoundException(userName);
         }
 
-        // Update the fields
         existingUser.setFirstName(updateUserDto.getFirstName());
         existingUser.setLastName(updateUserDto.getLastName());
-        existingUser.setPassword(updateUserDto.getPassword());
         existingUser.setModified(LocalDateTime.now());
 
-        // Save the updated user
         userRepository.save(existingUser);
         LOG.info("User {} updated successfully", userName);
 
@@ -144,6 +141,7 @@ public class UsersServiceImpl implements UsersService {
         // Создаем объект Offer из DTO
         Offer offer = new Offer();
         offer.setEngineEnum(offerAddDTO.getEngineEnum());
+
         offer.setUsers(userRepository.findByUserName(offerAddDTO.getUn()).orElse(null));
         offer.setModel(modelRepository.findByName(offerAddDTO.getModelName()).orElse(null));
         offer.setCreated(LocalDateTime.now());
@@ -153,6 +151,7 @@ public class UsersServiceImpl implements UsersService {
         offer.setMileage(offerAddDTO.getMileage());
         offer.setImageUrl(offerAddDTO.getImageURL());
         offer.setDescription(offerAddDTO.getDescription());
+        offer.setEngineEnum(offerAddDTO.getEngineEnum());
         offerRepository.save(offer);
     }
     //доразобраться с оформить заказ не видит при сохранении id user+model

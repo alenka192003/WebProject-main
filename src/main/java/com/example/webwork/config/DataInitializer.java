@@ -46,13 +46,15 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args){
+    public void run(String... args) {
         initRoles();
         initUsers();
     }
 
     private void seedData() {
     }
+
+
     private void initRoles() {
         if (roleRepository.count() == 0) {
             var adminRole = new Role(RoleEnum.Admin);
@@ -65,7 +67,7 @@ public class DataInitializer implements CommandLineRunner {
     private void initAdmin(){
         var adminRole = roleRepository.findByRoleEnum(RoleEnum.Admin).orElseThrow();
 
-        var adminUser = new Users("admin", passwordEncoder.encode(defaultPassword), "admin@example.com");
+        var adminUser = new Users("admin", "admin", "admin",passwordEncoder.encode(defaultPassword),"admin@example.com");
         adminUser.setRole(adminRole);
 
         usersRepository.save(adminUser);
@@ -73,7 +75,7 @@ public class DataInitializer implements CommandLineRunner {
     private void initNormalUser(){
         var userRole = roleRepository.findByRoleEnum(RoleEnum.User).orElseThrow();
 
-        var normalUser = new Users("user", passwordEncoder.encode(defaultPassword), "user@example.com");
+        var normalUser = new Users("user", "user","user", passwordEncoder.encode(defaultPassword),"user@example.com");
         normalUser.setRole(userRole);
 
         usersRepository.save(normalUser);

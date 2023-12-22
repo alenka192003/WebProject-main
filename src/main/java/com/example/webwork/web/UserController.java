@@ -99,10 +99,12 @@ public class UserController {
                              BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("updateUserModel", updateUserDto);
+            redirectAttributes.addFlashAttribute("updateUserModel", updateUserDto);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.updateUserModel",
                     bindingResult);
             return "redirect:/users/update/" + userName;
         }
+
         userService.updateUser(userName, updateUserDto);
         return "redirect:/users/all";
     }
@@ -162,21 +164,6 @@ public class UserController {
         return "profile";
     }
 
-    @GetMapping("/offer-add-u")
-    public String showOfferAddPage(@RequestParam String modelName, @RequestParam String buyer, Model model) {
-        OfferAddDTO offerAddDTO = new OfferAddDTO();
-        offerAddDTO.setUn(buyer);
-        offerAddDTO.setModelName(modelName);
-        model.addAttribute("offerAddDTO", offerAddDTO);
-        return "user/offer-add-u";
-    }
-
-    @PostMapping("/offer-add-u")
-    public String processOfferAdd(@ModelAttribute OfferAddDTO offerAddDTO) {
-        userService.addOfferUser(offerAddDTO);
-        // Здесь вы можете перенаправить пользователя на другую страницу или вернуть его обратно
-        return "redirect:/";
-    }
     @GetMapping("/user-details-offer")
     public String showUserOffers(Principal principal, Model model) {
         String username = principal.getName();

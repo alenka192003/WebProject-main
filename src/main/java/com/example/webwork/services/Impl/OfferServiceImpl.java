@@ -44,28 +44,6 @@ public class OfferServiceImpl implements OfferService {
         this.usersRepository = usersRepository;
         this.validationUtil = validationUtil;
     }
-
-    @Override
-    public OfferDTO registerOffer(OfferDTO offer) {
-
-        if (!this.validationUtil.isValid(offer)) {
-            this.validationUtil
-                    .violations(offer)
-                    .stream()
-                    .map(ConstraintViolation::getMessage)
-                    .forEach(System.out::println);
-            throw new IllegalArgumentException("не подходит");
-        }
-
-        Offer o = modelMapper.map(offer, Offer.class);
-        String offerId = o.getId();
-        if (offerId == null || offerRepository.findById(offerId).isEmpty()) {
-            return modelMapper.map(offerRepository.save(o), OfferDTO.class);
-        } else {
-            throw new OfferConflictException("уже существует с таким id");
-        }
-    }
-
     @Override
     public List<OfferDTO> getAll() {
         return offerRepository.findAll().stream().map((s) -> modelMapper.map(s, OfferDTO.class)).collect(Collectors.toList());

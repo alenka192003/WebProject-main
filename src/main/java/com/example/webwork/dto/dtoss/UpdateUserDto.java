@@ -9,9 +9,7 @@ public class UpdateUserDto {
     private String userName;
     private String firstName;
     private String lastName;
-    private String password;
-    @NotEmpty(message = "Name must not be null or empty!")
-    @Size(min = 2, max = 10, message = "Name must be more 2 !")
+
     public String getUserName() {
         return userName;
     }
@@ -36,14 +34,5 @@ public class UpdateUserDto {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-    @NotEmpty(message = "password must not be null or empty!")
-    @Size(min = 10, message = "password must be at least 1 characters!")
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 }

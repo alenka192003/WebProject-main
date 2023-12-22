@@ -15,7 +15,6 @@ public class AddModelDto {
     private int startYear;
     private LocalDateTime created;
     private LocalDateTime modified;
-
     private int endYear;
 
 

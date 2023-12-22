@@ -36,11 +36,6 @@ public class OfferController {
     @GetMapping("/{id}")
     OfferDTO getOffer(@PathVariable String id) {return offerService.findById(id).orElseThrow(() -> new OfferNotFoundException(id));}
 
-    @PostMapping()
-    OfferDTO createOffer(@RequestBody OfferDTO offer) {
-        return offerService.registerOffer(offer);
-    }
-
     @GetMapping("/add")
     public String addOffer(Model model) {
         model.addAttribute("availableModels", modelService.allModels());

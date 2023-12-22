@@ -2,9 +2,7 @@ package com.example.webwork.view;
 
 public class UserProfileView {
     private String userName;
-
     private String email;
-
 
     public UserProfileView() {
     }
