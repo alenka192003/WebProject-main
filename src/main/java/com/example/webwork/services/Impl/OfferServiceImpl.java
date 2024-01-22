@@ -1,36 +1,31 @@
 package com.example.webwork.services.Impl;
 
 import com.example.webwork.dto.BrandDTO;
-import com.example.webwork.dto.ModelDTO;
-import com.example.webwork.dto.dtoss.*;
-import com.example.webwork.except.OfferConflictException;
+import com.example.webwork.dto.ShowDetailedOfferDto;
+import com.example.webwork.dto.ShowInfoOffer;
 import com.example.webwork.except.OfferNotFoundException;
 import com.example.webwork.dto.OfferDTO;
 import com.example.webwork.models.Brand;
-import com.example.webwork.models.Model;
 import com.example.webwork.models.Offer;
-import com.example.webwork.models.Users;
 import com.example.webwork.repo.ModelRepository;
 import com.example.webwork.repo.OfferRepository;
 import com.example.webwork.repo.UsersRepository;
 import com.example.webwork.services.OfferService;
 import com.example.webwork.util.ValidationUtil;
+import com.example.webwork.dto.AddOfferDto;
 import jakarta.validation.ConstraintViolation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class OfferServiceImpl implements OfferService {
-
     private final ModelMapper modelMapper;
     private OfferRepository offerRepository;
     private ModelRepository modelRepository;
@@ -93,7 +88,11 @@ public class OfferServiceImpl implements OfferService {
     }
 
     public ShowDetailedOfferDto offerDetails(String id) {
-        return modelMapper.map(offerRepository.findById(id).orElse(null), ShowDetailedOfferDto.class);
+        Offer a = offerRepository.findById(id).orElse(null);
+        String un = a.getUsers().getUserName();
+        ShowDetailedOfferDto siD = modelMapper.map(a, ShowDetailedOfferDto.class);
+        siD.setUn(un);
+        return siD;
     }
 
     public void addOffer(AddOfferDto offerModel) {
@@ -122,5 +121,17 @@ public class OfferServiceImpl implements OfferService {
             return bestSellingBrand;
         }
         return null;
+    }
+
+    public BigDecimal getTotalProfit() {
+        BigDecimal totalProfit = BigDecimal.ZERO;
+
+        List<BigDecimal> profits = offerRepository.findTotalProfit();
+
+        for (BigDecimal profit : profits) {
+            totalProfit = totalProfit.add(profit);
+        }
+
+        return totalProfit;
     }
 }

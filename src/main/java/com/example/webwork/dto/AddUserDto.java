@@ -1,14 +1,10 @@
-package com.example.webwork.dto.dtoss;
+package com.example.webwork.dto;
 
-import com.example.webwork.dto.RoleDTO;
 import com.example.webwork.enums.RoleEnum;
 import com.example.webwork.except.UniqueUserName;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-
-import java.time.LocalDateTime;
 
 
 public class AddUserDto {

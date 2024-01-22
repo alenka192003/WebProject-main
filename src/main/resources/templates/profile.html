@@ -15,8 +15,10 @@
           <div class="col-md-6" th:object="${user}">
             <h2>User</h2>
             <h4 th:text="'Username: ' + *{userName}"></h4>
+            <h4 th:text="'Email: ' + *{email}"></h4>
             <b>User Roles: </b>
             <div sec:authentication="principal.authorities"></div>
+
       </main>
     </div>
   </div>

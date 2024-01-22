@@ -1,13 +1,12 @@
 package com.example.webwork.services;
 
 import com.example.webwork.dto.BrandDTO;
-import com.example.webwork.dto.ModelDTO;
 import com.example.webwork.dto.OfferDTO;
-import com.example.webwork.dto.UsersDTO;
-import com.example.webwork.dto.dtoss.*;
-import com.example.webwork.models.Model;
-import com.example.webwork.models.Offer;
+import com.example.webwork.dto.ShowDetailedOfferDto;
+import com.example.webwork.dto.ShowInfoOffer;
+import com.example.webwork.dto.AddOfferDto;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,5 +20,5 @@ public interface OfferService {
     ShowDetailedOfferDto offerDetails(String id);
     void addOffer(AddOfferDto offerModel);
     BrandDTO getBestSellingBrand();
-
+    BigDecimal getTotalProfit();
 }

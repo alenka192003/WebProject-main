@@ -1,24 +1,21 @@
 package com.example.webwork.services.Impl;
 
-import com.example.webwork.dto.dtoss.*;
-import com.example.webwork.except.BrandConflictException;
+import com.example.webwork.dto.ShowDetailedBrandInfoDto;
+import com.example.webwork.dto.ShowModelInfoDto;
+import com.example.webwork.dto.UpdateBrandDto;
 import com.example.webwork.except.BrandNotFoundException;
 import com.example.webwork.dto.BrandDTO;
-import com.example.webwork.except.UsersNotFoundException;
 import com.example.webwork.models.Brand;
 import com.example.webwork.models.Model;
-import com.example.webwork.models.Users;
 import com.example.webwork.repo.BrandRepository;
 import com.example.webwork.repo.ModelRepository;
 import com.example.webwork.services.BrandService;
 import com.example.webwork.util.ValidationUtil;
-import jakarta.validation.ConstraintViolation;
+import com.example.webwork.dto.AddBrandDto;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -27,7 +24,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-//@EnableCaching
 public class BrandServiceImpl implements BrandService {
 
     private final ModelMapper modelMapper;
@@ -79,7 +75,6 @@ public class BrandServiceImpl implements BrandService {
         this.brandRepository = brandRepository;
     }
 
-    //  @Cacheable("brands")
     public List<ShowDetailedBrandInfoDto> allBrands() {
         return brandRepository.findAll().stream().map(company -> modelMapper.map(company, ShowDetailedBrandInfoDto.class))
                 .collect(Collectors.toList());

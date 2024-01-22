@@ -35,11 +35,12 @@ public class AppSecurityConfiguration {
                                 authorizeHttpRequests.
                                         requestMatchers(PathRequest.toStaticResources().atCommonLocations())
                                         .permitAll().
-                                        requestMatchers("/", "/users/login", "/users/register", "/users/login-error")
+                                        requestMatchers("/","/pic/**", "/users/login", "/users/register", "/users/login-error")
                                         .permitAll().
                                         requestMatchers("/users/profile").authenticated().
                                         requestMatchers("/users/add", "/users/user-delete/").hasRole(RoleEnum.Admin.name()).
                                         anyRequest().authenticated()
+
                 )
                 .formLogin(
                         (formLogin) ->
@@ -58,6 +59,7 @@ public class AppSecurityConfiguration {
                         securityContext -> securityContext.
                                 securityContextRepository(securityContextRepository)
                 );
+
 
         return http.build();
     }

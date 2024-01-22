@@ -1,14 +1,23 @@
-package com.example.webwork.dto.dtoss;
+package com.example.webwork.dto;
 
 import com.example.webwork.dto.RoleDTO;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
-public class UpdateUserDto {
+public class ShowInfoUsers {
+
+    private RoleDTO role;
     private String userName;
+    private String password;
     private String firstName;
     private String lastName;
+
+
+    public RoleDTO getRole() {
+        return role;
+    }
+
+    public void setRole(RoleDTO role) {
+        this.role = role;
+    }
 
     public String getUserName() {
         return userName;
@@ -17,8 +26,15 @@ public class UpdateUserDto {
     public void setUserName(String userName) {
         this.userName = userName;
     }
-    @Size(min = 2, message = "firstName must be more than 2!")
-    @NotNull(message = "firstName must not be null or empty!")
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -26,8 +42,7 @@ public class UpdateUserDto {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-    @Size(min = 2,message = "lastName must be more than 2!")
-    @NotNull(message = "lastName must not be null or empty!")
+
     public String getLastName() {
         return lastName;
     }
@@ -35,4 +50,5 @@ public class UpdateUserDto {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
 }

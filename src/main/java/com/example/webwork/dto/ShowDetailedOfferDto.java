@@ -1,22 +1,22 @@
-package com.example.webwork.dto.dtoss;
+package com.example.webwork.dto;
 
 import com.example.webwork.enums.EngineEnum;
 import com.example.webwork.enums.TransmissionEnum;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
-public class OfferAddDTO {
+public class ShowDetailedOfferDto {
+    private String id;
     private String modelName;
     private String un;
+    private String description;
     private EngineEnum engineEnum;
+    private String imageURL;
     private int mileage;
     private BigDecimal price;
-    private String imageURL;
-    private String description;
-    private int year;
-    private LocalDateTime created;
     private TransmissionEnum transmissionEnum;
+    private int year;
+
 
     public String getModelName() {
         return modelName;
@@ -25,6 +25,31 @@ public class OfferAddDTO {
     public void setModelName(String modelName) {
         this.modelName = modelName;
     }
+
+    public String getUn() {
+        return un;
+    }
+
+    public void setUn(String un) {
+        this.un = un;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public EngineEnum getEngineEnum() {
         return engineEnum;
     }
@@ -33,6 +58,13 @@ public class OfferAddDTO {
         this.engineEnum = engineEnum;
     }
 
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
 
     public int getMileage() {
         return mileage;
@@ -50,14 +82,6 @@ public class OfferAddDTO {
         this.price = price;
     }
 
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
     public TransmissionEnum getTransmissionEnum() {
         return transmissionEnum;
     }
@@ -66,36 +90,12 @@ public class OfferAddDTO {
         this.transmissionEnum = transmissionEnum;
     }
 
-    public String getUn() {
-        return un;
+    public int getYear() {
+        return year;
     }
 
-    public void setUn(String un) {
-        this.un = un;
+    public void setYear(int year) {
+        this.year = year;
     }
 
-    public String getImageURL() {
-        return imageURL;
-    }
-
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
-    }
-
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-// геттеры и сеттеры
 }

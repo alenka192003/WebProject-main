@@ -1,4 +1,4 @@
-package com.example.webwork.dto.dtoss;
+package com.example.webwork.dto;
 
 import com.example.webwork.dto.BrandDTO;
 import com.example.webwork.enums.CategoryEnum;

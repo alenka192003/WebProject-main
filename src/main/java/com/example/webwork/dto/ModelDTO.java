@@ -128,5 +128,3 @@ public class ModelDTO {
                 '}';
     }
 }
-
-// Инициализировать Enum's в скобочках

@@ -1,6 +1,4 @@
-package com.example.webwork.dto.dtoss;
-
-import java.time.LocalDateTime;
+package com.example.webwork.dto;
 
 public class ShowDetailedBrandInfoDto {
     private String name;

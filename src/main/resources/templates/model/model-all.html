@@ -8,7 +8,6 @@
     <div class="jumbotron text-center rounded col-md-8 pt-5">
       <h2 class="text-center text-dark mt-5">All Models</h2>
 
-      <!-- Таблица для отображения моделей -->
       <table class="table table-bordered mt-3">
         <thead>
         <tr>
@@ -23,13 +22,11 @@
           <td th:text="${model.category}"></td>
           <td>
             <a class="btn btn-primary" th:href="@{/models/model-details/{model-name}(model-name=${model.name})}">Detail info</a>
-            <!-- Добавленная кнопка "Купить" с проверкой роли -->
           </td>
         </tr>
         </tbody>
       </table>
 
-      <!-- Кнопка ADD MODEL чуть ниже таблицы и с цветом -->
       <ul class="nav justify-content-center mt-3">
         <li class="nav-item" sec:authorize="hasRole('Admin')">
           <a class="btn btn-success" href="/models/add">ADD MODEL</a>

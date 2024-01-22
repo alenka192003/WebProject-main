@@ -1,4 +1,4 @@
-package com.example.webwork.dto.dtoss;
+package com.example.webwork.dto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;

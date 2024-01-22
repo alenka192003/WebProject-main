@@ -1,9 +1,8 @@
 package com.example.webwork.web;
 
-import com.example.webwork.dto.dtoss.AddBrandDto;
-import com.example.webwork.dto.dtoss.ShowModelInfoDto;
-import com.example.webwork.dto.dtoss.UpdateBrandDto;
-import com.example.webwork.dto.dtoss.UpdateUserDto;
+import com.example.webwork.dto.AddBrandDto;
+import com.example.webwork.dto.ShowModelInfoDto;
+import com.example.webwork.dto.UpdateBrandDto;
 import com.example.webwork.models.Brand;
 import com.example.webwork.repo.BrandRepository;
 import com.example.webwork.services.BrandService;
@@ -19,7 +18,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/brands")
@@ -49,9 +47,6 @@ public class BrandController {
     void deleteBrand(@PathVariable String id) {
         brandService.expel(id);
     }
-    //валидация + логика Все бренды имеют свои модели
-    //все варианты + офферы и модели
-
     @ModelAttribute("brandModel")
     public AddBrandDto initBrand() {
         return new AddBrandDto();

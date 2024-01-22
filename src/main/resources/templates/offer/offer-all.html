@@ -6,8 +6,12 @@
 <main class="flex-shrink-0">
   <div class="container d-flex justify-content-center align-items-center h-100">
     <div class="jumbotron text-center rounded col-md-8 pt-5">
-
       <h2 class="text-center text-dark mt-5">All Offers</h2>
+      <div class="d-flex justify-content-center align-items-center mb-3">
+        <span class="font-weight-bold" style="font-size: 24px;">Total Profit:</span>
+        <span th:text="${totalProfit}" class="ml-2" style="font-size: 28px;"></span>
+        <img src="/pic/rubl.png" alt="Rubl" class="ml-2" style="width: 30px; height: 30px;">
+      </div>
 
       <table class="table table-bordered mt-3">
         <thead>
@@ -32,7 +36,6 @@
         <a class="btn btn-success" href="/offers/add">ADD OFFER</a>
       </div>
     </div>
-  </div>
   </div>
 </main>
 <footer th:replace="fragments/footer"/>

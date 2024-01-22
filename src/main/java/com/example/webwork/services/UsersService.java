@@ -1,9 +1,7 @@
 package com.example.webwork.services;
 
 
-import com.example.webwork.dto.UsersDTO;
-import com.example.webwork.dto.dtoss.*;
-import com.example.webwork.models.Offer;
+import com.example.webwork.dto.*;
 import com.example.webwork.models.Users;
 
 import java.util.List;
@@ -24,6 +22,5 @@ public interface UsersService {
     void removeUser(String userName);
     Users getUserDetails(String userName);
     Users getUser(String userName);
-    void addOfferUser(OfferAddDTO offerAddDTO);
     void updateUser(String userName, UpdateUserDto updateUserDto);
 }

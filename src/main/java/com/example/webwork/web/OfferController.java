@@ -1,7 +1,8 @@
 package com.example.webwork.web;
 
 import com.example.webwork.dto.OfferDTO;
-import com.example.webwork.dto.dtoss.AddOfferDto;
+import com.example.webwork.dto.AddOfferDto;
+import com.example.webwork.dto.ShowInfoOffer;
 import com.example.webwork.except.OfferNotFoundException;
 import com.example.webwork.services.ModelService;
 import com.example.webwork.services.OfferService;
@@ -16,7 +17,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.math.BigDecimal;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/offers")
@@ -71,7 +74,10 @@ public class OfferController {
     @GetMapping("/all")
     public String showAllOffers(Principal principal,Model model) {
         LOG.log(Level.INFO,"Show all offers for "+ principal.getName());
+        List<ShowInfoOffer> allOffers = offerService.allOffers();
+        BigDecimal totalProfit = offerService.getTotalProfit();
         model.addAttribute("offerInfo", offerService.allOffers());
+        model.addAttribute("totalProfit", totalProfit);
 
         return "offer/offer-all";
     }

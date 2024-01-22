@@ -1,18 +1,16 @@
 package com.example.webwork.services.Impl;
 
-import com.example.webwork.dto.dtoss.AddUserDto;
-import com.example.webwork.dto.dtoss.UserRegistrationDto;
+import com.example.webwork.dto.AddUserDto;
+import com.example.webwork.dto.UserRegistrationDto;
 import com.example.webwork.enums.RoleEnum;
 import com.example.webwork.models.Users;
 import com.example.webwork.repo.RoleRepository;
 import com.example.webwork.repo.UsersRepository;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 @Service

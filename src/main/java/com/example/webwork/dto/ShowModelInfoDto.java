@@ -1,9 +1,6 @@
-package com.example.webwork.dto.dtoss;
+package com.example.webwork.dto;
 
 import com.example.webwork.enums.CategoryEnum;
-
-
-import java.time.LocalDateTime;
 
 public class ShowModelInfoDto {
     private String name;

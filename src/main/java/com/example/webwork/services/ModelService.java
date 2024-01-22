@@ -1,10 +1,8 @@
 package com.example.webwork.services;
 
 import com.example.webwork.dto.ModelDTO;
-import com.example.webwork.dto.UsersDTO;
-import com.example.webwork.dto.dtoss.*;
-import com.example.webwork.enums.CategoryEnum;
-import com.example.webwork.models.Model;
+import com.example.webwork.dto.ShowModelInfoDto;
+import com.example.webwork.dto.AddModelDto;
 
 import java.util.List;
 import java.util.Optional;

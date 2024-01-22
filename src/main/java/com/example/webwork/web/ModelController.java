@@ -1,7 +1,7 @@
 package com.example.webwork.web;
 
 import com.example.webwork.dto.ModelDTO;
-import com.example.webwork.dto.dtoss.AddModelDto;
+import com.example.webwork.dto.AddModelDto;
 import com.example.webwork.except.ModelNotFoundException;
 import com.example.webwork.services.BrandService;
 import com.example.webwork.services.ModelService;
@@ -10,7 +10,6 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;

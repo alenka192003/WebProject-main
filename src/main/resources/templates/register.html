@@ -48,10 +48,9 @@
                         <label class="form-label" for="email">Email</label>
                         <input th:field="*{email}"
                                th:errorclass="is-invalid"
-                               type="email" class="form-control text-center"
-                               id="email" aria-describedby="email" name="email"/>
-                        <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
-                               class="text-danger">Error
+                               type="text" class="form-control text-center" id="email" aria-describedby="emailHelp"
+                               name="email"/>
+                        <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger">Error
                             message</small>
                     </div>
 

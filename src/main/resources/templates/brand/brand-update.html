@@ -12,9 +12,7 @@
                 <div class="card-body">
                     <h2 class="card-title text-center mb-4">Update Brand</h2>
 
-                    <!-- Thymeleaf form with Spring model attribute -->
                     <form th:object="${updateBrandForm}" th:action="@{'/brands/update/'+ ${brand.name}}" method="post">
-                        <!-- Thymeleaf hidden field for brand name -->
                         <div class="form-group">
                             <label for="name">Brand Name:</label>
                             <input type="text" id="name" name="name" th:field="*{name}"

@@ -1,15 +1,16 @@
 package com.example.webwork.web;
 
-import com.example.webwork.dto.dtoss.*;
+import com.example.webwork.dto.AddUserDto;
+import com.example.webwork.dto.ShowInfoOffer;
+import com.example.webwork.dto.UpdateUserDto;
+import com.example.webwork.dto.UserRegistrationDto;
+import com.example.webwork.view.*;
 import com.example.webwork.models.Users;
 import com.example.webwork.repo.UsersRepository;
 import com.example.webwork.services.Impl.AuthService;
-import com.example.webwork.services.OfferService;
 import com.example.webwork.services.UsersService;
-import com.example.webwork.view.UserProfileView;
 import jakarta.validation.Valid;
 import org.apache.logging.log4j.Level;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

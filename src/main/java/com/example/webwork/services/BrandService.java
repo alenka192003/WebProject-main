@@ -1,8 +1,11 @@
 package com.example.webwork.services;
 
 import com.example.webwork.dto.BrandDTO;
-import com.example.webwork.dto.dtoss.*;
+import com.example.webwork.dto.ShowDetailedBrandInfoDto;
+import com.example.webwork.dto.ShowModelInfoDto;
+import com.example.webwork.dto.UpdateBrandDto;
 import com.example.webwork.models.Brand;
+import com.example.webwork.dto.AddBrandDto;
 
 import java.util.List;
 import java.util.Optional;
